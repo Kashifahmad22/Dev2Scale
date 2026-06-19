@@ -50,9 +50,9 @@ export const siteConfig = {
 
   contact: {
     email: "hello@dev2scale.com",
-    phone: "",
-    calendly: "https://calendly.com/dev2scale",
-    whatsapp: "",
+    phone: "+91 7858057383",
+    calendly: "https://calendly.com/mkkashif2002/30min",
+    whatsapp: "+91 7858057383",
   },
 
   social: {
