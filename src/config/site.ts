@@ -57,7 +57,7 @@ export const siteConfig = {
 
   social: {
     linkedin: "https://linkedin.com/company/dev2scale",
-    instagram: "https://instagram.com/dev2scale",
+    instagram: "https://www.instagram.com/dev2.scale?igsh=aG8yMXp3dnB4OXZq",
     twitter: "",
   },
 
