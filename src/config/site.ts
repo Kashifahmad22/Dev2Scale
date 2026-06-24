@@ -945,7 +945,7 @@ export const loomDemosContent = {
       title: "Lead Qualification Bot",
       description:
         "An inbound lead qualified and booked in under four minutes — with no human in the loop.",
-      loomUrl: "https://www.loom.com/share/3980e348cd2a47e3bbf9452698f1ca1b",
+      loomUrl: "https://www.loom.com/share/0dc081748b674312b101950c26ad8b1a",
     },
     {
       id: "appointment-booking",
