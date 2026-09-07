@@ -12,7 +12,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { useScrollDetection } from "@/hooks/useScrollDetection";
-import { navLinks, siteConfig } from "@/config/site";
+import { navLinks } from "@/config/site";
 import { EASE_CLEAN } from "@/lib/animations";
 import { cn, smoothScrollToId } from "@/lib/utils";
 
@@ -73,14 +73,8 @@ export function Navbar() {
         </ul>
 
         <div className="hidden md:block">
-          <Button
-            href={siteConfig.contact.calendly}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="dark"
-            size="sm"
-          >
-            Book a Strategy Call
+          <Button href="#contact" variant="dark" size="sm">
+            Let’s Talk
           </Button>
         </div>
 
@@ -117,14 +111,8 @@ export function Navbar() {
                 </li>
               ))}
               <li className="pt-2">
-                <Button
-                  href={siteConfig.contact.calendly}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  size="md"
-                  className="w-full"
-                >
-                  Book a Strategy Call
+                <Button href="#contact" size="md" className="w-full">
+                  Let’s Talk
                 </Button>
               </li>
             </ul>

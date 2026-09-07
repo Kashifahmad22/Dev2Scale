@@ -15,6 +15,7 @@ const config: Config = {
           DEFAULT: "#ffffff",
           secondary: "#f5f7fb", // very light cool grey for alternating sections
           card: "#ffffff",
+          elevated: "#ffffff",
           dark: "#0b0a16", // footer / dark anchor band
         },
         content: {
@@ -26,6 +27,14 @@ const config: Config = {
           DEFAULT: "#2f57e2", // royal blue
           hover: "#2546c8",
           soft: "#eef3ff", // light blue tint for chips / surfaces
+        },
+        success: {
+          DEFAULT: "#167a57",
+          soft: "#ecf8f2",
+        },
+        warning: {
+          DEFAULT: "#9a5a12",
+          soft: "#fff6e8",
         },
       },
       fontFamily: {

@@ -11,6 +11,8 @@ interface CardProps {
   interactive?: boolean;
   /** Renders a subtle accent ring + glow to mark a highlighted item. */
   highlighted?: boolean;
+  /** Surface treatment shared by content, media, and low-emphasis cards. */
+  variant?: "default" | "muted" | "outline";
 }
 
 /**
@@ -23,6 +25,7 @@ export function Card({
   className,
   interactive = false,
   highlighted = false,
+  variant = "default",
 }: CardProps) {
   const reduce = useReducedMotion();
 
@@ -32,6 +35,8 @@ export function Card({
       transition={{ duration: 0.2, ease: EASE_CLEAN }}
       className={cn(
         "rounded-card border bg-background-card",
+        variant === "muted" && "bg-background-secondary shadow-none",
+        variant === "outline" && "bg-transparent shadow-none",
         !highlighted && "shadow-card",
         interactive &&
           "transition-[box-shadow,border-color] duration-200 ease-clean hover:border-accent/30 hover:shadow-cardHover",

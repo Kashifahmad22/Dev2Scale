@@ -5,7 +5,11 @@ import { Play } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { loomDemosContent, type LoomDemo } from "@/config/site";
-import { staggerContainer, staggerItem, getMotionProps } from "@/lib/animations";
+import {
+  staggerContainer,
+  staggerItem,
+  getMotionProps,
+} from "@/lib/animations";
 
 /**
  * Converts a Loom share URL to its embeddable form. Returns null when the URL
@@ -52,7 +56,7 @@ function DemoCard({ demo }: { demo: LoomDemo }) {
   const embed = toLoomEmbed(demo.loomUrl);
 
   return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-card border bg-background-card shadow-card transition-shadow duration-200 hover:shadow-cardHover">
+    <div className="surface-elevated group flex h-full flex-col overflow-hidden rounded-lg transition-[box-shadow,border-color] duration-200 hover:border-accent/25 hover:shadow-cardHover">
       <div className="relative aspect-video w-full overflow-hidden border-b">
         {embed ? (
           <iframe
@@ -70,7 +74,10 @@ function DemoCard({ demo }: { demo: LoomDemo }) {
       </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-base font-semibold text-content">{demo.title}</h3>
+        <span className="meta-label text-accent">System walkthrough</span>
+        <h3 className="mt-3 text-base font-semibold text-content">
+          {demo.title}
+        </h3>
         <p className="mt-2 text-sm leading-relaxed text-content-secondary">
           {demo.description}
         </p>

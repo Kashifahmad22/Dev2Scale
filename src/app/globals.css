@@ -11,6 +11,7 @@
   --bg-primary: #ffffff;
   --bg-secondary: #f5f7fb;
   --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
   --bg-dark: #0b0a16;
 
   /* Deep navy text + greys */
@@ -22,6 +23,10 @@
   --accent: #2f57e2;
   --accent-hover: #2546c8;
   --accent-soft: #eef3ff;
+  --success: #167a57;
+  --success-soft: #ecf8f2;
+  --warning: #9a5a12;
+  --warning-soft: #fff6e8;
 
   /* Light hairlines */
   --border-default: rgba(13, 18, 40, 0.08);
@@ -32,6 +37,8 @@
   --radius: 8px;
   --radius-card: 12px;
   --radius-lg: 20px;
+  --section-space: clamp(5rem, 9vw, 8rem);
+  --container-width: 80rem;
 }
 
 @layer base {
@@ -100,6 +107,25 @@
     box-shadow:
       0 1px 2px 0 rgba(13, 18, 40, 0.04),
       0 12px 32px -16px rgba(13, 18, 40, 0.16);
+  }
+
+  /* Shared elevated surface for work, pricing, and media modules. */
+  .surface-elevated {
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    box-shadow:
+      0 1px 2px 0 rgba(13, 18, 40, 0.04),
+      0 18px 44px -28px rgba(13, 18, 40, 0.2);
+  }
+
+  /* Editorial metadata: quiet, compact, and intentionally technical. */
+  .meta-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
   }
 
   /* Subtle dotted grid used behind the hero — clean, techy, trustworthy. */

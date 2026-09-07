@@ -36,9 +36,9 @@ import {
 
 export const siteConfig = {
   name: "Dev2Scale",
-  tagline: "Turn More Leads Into Booked Calls — Automatically.",
+  tagline: "Build. Automate. Grow.",
   description:
-    "Dev2Scale builds AI-powered WhatsApp systems that respond to every lead in under 90 seconds, qualify them automatically, and book discovery calls — so you can focus on closing.",
+    "Dev2Scale builds websites, AI systems, and performance marketing infrastructure that helps businesses grow.",
   url: "https://dev2scale.com",
 
   logo: {
@@ -77,7 +77,7 @@ export const siteConfig = {
   // Company info (used in footer, metadata, structured data).
   company: {
     legalName: "Dev2Scale",
-    serviceArea: "US · UK · Canada · Australia",
+    serviceArea: "India · United States · International",
     foundedYear: "2025",
   },
 } as const;
@@ -94,11 +94,10 @@ export interface NavLink {
 }
 
 export const navLinks: NavLink[] = [
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Solutions", href: "#solutions" },
-  { label: "Demos", href: "#demos" },
-  { label: "Pricing", href: "#offers" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Services", href: "#services" },
+  { label: "Work", href: "#work" },
+  { label: "Process", href: "#process" },
+  { label: "About", href: "#why-dev2scale" },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -115,7 +114,10 @@ export const heroContent = {
   headline: siteConfig.tagline,
   subheadline:
     "Dev2Scale builds AI-powered WhatsApp systems that respond to every lead in under 90 seconds, qualify them automatically, and book discovery calls — while you focus on closing.",
-  primaryCta: { label: "Book a Strategy Call", href: siteConfig.contact.calendly },
+  primaryCta: {
+    label: "Book a Strategy Call",
+    href: siteConfig.contact.calendly,
+  },
   secondaryCta: { label: "See How It Works", href: "#how-it-works" },
   // The four-stage flow visualised in the hero diagram.
   diagramNodes: [
@@ -343,7 +345,7 @@ export type SystemDemo =
 export const demosContent = {
   heading: "See the systems in action.",
   subheading:
-    "These are real automation architectures. Each one is built and deployed in 5–7 days.",
+    "Practical examples of how AI can qualify, follow up, route information, and hand work to the right person.",
   demos: [
     {
       id: "coach-qualification",
@@ -403,7 +405,8 @@ export const demosContent = {
       id: "no-show-recovery",
       label: "No-Show Recovery",
       type: "flow",
-      caption: "A missed call becomes a re-booked call instead of lost revenue.",
+      caption:
+        "A missed call becomes a re-booked call instead of lost revenue.",
       steps: [
         {
           title: "Missed call detected",
@@ -762,82 +765,57 @@ export interface FaqItem {
 }
 
 export const faqContent = {
-  heading: "Common questions.",
+  heading: "Questions, answered.",
   items: [
     {
-      question: "How long does it take to set up?",
+      question: "What does Dev2Scale do?",
       answer:
-        "5–7 business days from the moment we receive your onboarding details and access credentials. We don't do lengthy discovery phases.",
+        "We connect website development, AI systems and automation, and performance marketing around the business outcome you are trying to improve.",
     },
     {
-      question: "What do I need to get started?",
+      question: "Do you build websites for local businesses?",
       answer:
-        "A WhatsApp Business number, a Calendly account, and 2 hours to complete our onboarding form. We handle the rest.",
+        "Yes. Our website packages are designed for local businesses, service companies, growing brands, and e-commerce businesses.",
     },
     {
-      question: "Does this work with my existing CRM?",
+      question: "Do you work with businesses outside India?",
       answer:
-        "Yes. We integrate with HubSpot, Notion, Airtable, Google Sheets, and most CRMs via API. If you use something else, ask us — we'll likely support it.",
+        "Yes. Dev2Scale works remotely with businesses in India, the United States, and beyond.",
     },
     {
-      question: "What happens if a lead asks something the AI can't answer?",
+      question: "What AI systems can you build?",
       answer:
-        "The AI is designed to qualify and book — not to replace your sales process. If a question falls outside its scope, it escalates to you with a notification.",
+        "Examples include AI lead qualification, voice receptionists, follow-up, appointment workflows, customer support, CRM automation, and custom operational workflows.",
     },
     {
-      question: "Is this really WhatsApp? Will my leads see it as spam?",
+      question: "Do you manage Meta Ads and Google Ads?",
       answer:
-        "This runs on the official WhatsApp Business API. Messages are personalised, conversational, and context-aware. Leads respond because it feels like a real conversation — because it is one.",
+        "Performance packages can include Meta Ads or Google Ads, depending on the business, customer journey, and campaign objective.",
     },
     {
-      question: "Will it work for my niche?",
+      question: "Is advertising spend included in the management fee?",
       answer:
-        "If your business generates inbound enquiries and books discovery calls, yes. We work best with coaches, consultants, real estate professionals, fitness businesses, and high-ticket service providers.",
+        "No. Advertising spend is separate from the Dev2Scale management fee and remains under your control.",
     },
     {
-      question: "What if I don't have many leads yet?",
+      question: "How much does a website cost?",
       answer:
-        "Automation multiplies what you already have. If you have 10 leads/month, this turns those 10 into 3–4 booked calls instead of 1. If you're under 5 leads/month, focus on lead generation first.",
+        "Current website project investments range from ₹15,000 to ₹50,000 depending on scope, conversion needs, and e-commerce requirements.",
     },
     {
-      question: "What does the AI actually say to my leads?",
+      question: "How much does performance marketing cost?",
       answer:
-        "Everything the AI says is written by us based on your qualification criteria, your brand voice, and your offer. You review and approve all messaging before go-live.",
+        "Current management fees range from ₹12,000 to ₹30,000 per month. Advertising spend is separate.",
     },
     {
-      question: "Do I need technical knowledge to use this?",
+      question: "Can you build the website and manage advertising?",
       answer:
-        "None. Once deployed, the system runs without any input from you. We provide a simple dashboard for visibility and handle all technical maintenance.",
+        "Yes. The Build and Grow services are designed to connect the website, conversion journey, tracking, and acquisition work where that is the right fit.",
     },
     {
-      question: "What happens if Twilio or WhatsApp goes down?",
+      question: "Can you integrate AI with our existing tools?",
       answer:
-        "We monitor your systems continuously. In the rare event of a third-party outage, we're alerted immediately, notify you, and fall back to backup protocols. Because everything runs on the official WhatsApp Business API and enterprise-grade providers, outages are rare and recovery is fast.",
-    },
-    {
-      question: "Can I cancel anytime?",
-      answer:
-        "Yes. Monthly retainers require 30 days' written notice. You own all the systems we build — they remain yours regardless of whether we continue working together.",
-    },
-    {
-      question: "Do you work with businesses outside the US/UK?",
-      answer:
-        "Yes. We serve clients across the US, UK, Canada, and Australia. All pricing is in USD and we accept international bank transfers via Wise.",
-    },
-    {
-      question: "What's the difference between the Pilot and the Growth System?",
-      answer:
-        "The Pilot is one flow, built to prove the concept for your business. The Growth System is your complete lead conversion infrastructure — multiple flows, ongoing management, and monthly optimisation.",
-    },
-    {
-      question: "How do you measure success?",
-      answer:
-        "We report on leads processed, response rate, qualification rate, calls booked, and no-show recovery rate. Every retainer client receives a monthly performance report.",
-    },
-    {
-      question: "What if it doesn't work for my business?",
-      answer:
-        "The Pilot is designed to answer exactly that question before you commit to a full retainer. If the system doesn't generate results, we diagnose why and fix it — or we don't charge for ongoing management.",
+        "We scope systems around the workflows and tools you already use. The consultation identifies what should connect and what is practical to automate.",
     },
   ] satisfies FaqItem[],
 };
@@ -863,27 +841,25 @@ export const finalCtaContent = {
 /* -------------------------------------------------------------------------- */
 
 export const footerContent = {
-  positioning: "AI-powered lead conversion systems for businesses that close.",
+  positioning:
+    "Build. Automate. Grow. Websites, systems, and acquisition infrastructure for ambitious businesses.",
   columns: {
     services: {
       heading: "Services",
       links: [
-        { label: "Lead Qualification", href: "#solutions" },
-        { label: "Appointment Booking", href: "#solutions" },
-        { label: "Lead Re-engagement", href: "#solutions" },
-        { label: "WhatsApp Automation", href: "#solutions" },
-        { label: "CRM Integration", href: "#solutions" },
-        { label: "AI Follow-Up", href: "#solutions" },
+        { label: "Website Development", href: "#website-packages" },
+        { label: "AI Systems", href: "#ai-systems" },
+        { label: "Performance Marketing", href: "#marketing-packages" },
       ],
     },
     company: {
       heading: "Company",
       links: [
-        { label: "About", href: "#why" },
-        { label: "How It Works", href: "#how-it-works" },
-        { label: "Pricing", href: "#offers" },
+        { label: "Work", href: "#work" },
+        { label: "Process", href: "#process" },
+        { label: "About", href: "#why-dev2scale" },
         { label: "FAQ", href: "#faq" },
-        { label: "Book a Call", href: siteConfig.contact.calendly },
+        { label: "Contact", href: "#contact" },
       ],
     },
   },
@@ -936,9 +912,9 @@ export interface LoomDemo {
 
 export const loomDemosContent = {
   eyebrow: "Watch the systems work",
-  heading: "Real walkthroughs, not slideware.",
+  heading: "See the systems in action.",
   subheading:
-    "Short, no-fluff screen recordings of each automation in action. We add new walkthroughs as we ship them.",
+    "Short walkthroughs of real operational systems. More examples are added when they can be shown with the right context.",
   items: [
     {
       id: "lead-qualification",
@@ -957,7 +933,8 @@ export const loomDemosContent = {
     {
       id: "no-show-recovery",
       title: "No-Show Recovery System",
-      description: "Turning missed calls back into booked calls, automatically.",
+      description:
+        "Turning missed calls back into booked calls, automatically.",
       loomUrl: "",
     },
     {
