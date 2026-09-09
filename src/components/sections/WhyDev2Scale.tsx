@@ -1,33 +1,36 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
+import { StaggerGroup, StaggerGroupItem } from "@/components/ui/StaggerGroup";
 import { whyContent, type ValueProp } from "@/config/site";
-import { staggerContainer, staggerItem, getMotionProps } from "@/lib/animations";
 
 /**
- * Why Dev2Scale — four differentiators in a 2×2 grid. Reinforces the
- * revenue-first, business-outcome positioning (not technology).
+ * WhyDev2Scale — four differentiators in a 2×2 grid, with icons. Reinforces
+ * the revenue-first, business-outcome positioning rather than technology.
+ *
+ * This is the richer, icon-carrying counterpart to the homepage's own
+ * `WhySection` (a plain numbered list, deliberately quiet since it's the
+ * last section before the homepage's final CTA). This one is mounted where
+ * the icon treatment earns its place instead of competing with that
+ * quietness — see `docs/adr/0003`. Rebuilt on current tokens.
  */
-export function WhyDev2Scale({ className }: { className?: string }) {
-  const reduce = useReducedMotion();
-
+export function WhyDev2Scale() {
   return (
-    <Section id="why" className={className}>
-      <SectionHeading eyebrow="Why Dev2Scale" title={whyContent.heading} />
-
-      <motion.div
-        {...getMotionProps(reduce, staggerContainer)}
-        className="mt-14 grid gap-5 sm:grid-cols-2"
+    <Section
+      id="why"
+      tone="paper"
+      heading={{ eyebrow: "Why Dev2Scale", title: whyContent.heading }}
+    >
+      <StaggerGroup
+        as="ul"
+        childCount={whyContent.items.length}
+        className="grid gap-5 sm:grid-cols-2"
       >
         {whyContent.items.map((item) => (
-          <motion.div key={item.title} variants={staggerItem}>
+          <StaggerGroupItem as="li" key={item.title} className="h-full">
             <ValueCard value={item} />
-          </motion.div>
+          </StaggerGroupItem>
         ))}
-      </motion.div>
+      </StaggerGroup>
     </Section>
   );
 }
@@ -36,12 +39,12 @@ function ValueCard({ value }: { value: ValueProp }) {
   const Icon = value.icon;
   return (
     <Card interactive className="flex h-full gap-5 p-7">
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-accent/25 bg-accent/[0.07] text-accent">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-paper-sunk text-signal">
         <Icon size={22} strokeWidth={1.75} />
       </span>
       <div>
-        <h3 className="text-lg font-semibold text-content">{value.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-content-secondary">
+        <h3 className="text-title font-semibold text-ink">{value.title}</h3>
+        <p className="mt-2 text-body-sm leading-relaxed text-ink-secondary">
           {value.description}
         </p>
       </div>

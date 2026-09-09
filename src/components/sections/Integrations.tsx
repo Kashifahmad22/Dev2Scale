@@ -1,43 +1,45 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { StaggerGroup, StaggerGroupItem } from "@/components/ui/StaggerGroup";
 import { integrationsContent, type Integration } from "@/config/site";
-import { staggerContainer, staggerItem, getMotionProps } from "@/lib/animations";
 
 /**
- * Integration ecosystem — real brand logos rendered as CSS masks so they're
- * uniformly monochrome (grey → brand-blue on hover) regardless of each SVG's
- * own colors. SVGs live in /public/logos/{slug}.svg (Simple Icons).
+ * Integration ecosystem — real, honest tool logos rendered as CSS masks so
+ * they're uniformly monochrome regardless of each SVG's own colours. SVGs
+ * live in `/public/logos/{slug}.svg` (Simple Icons).
+ *
+ * Retheme note: this section predates ADR 0002 and previously referenced
+ * dead pre-retheme classes (`bg-background-card`, `text-content-secondary`,
+ * `hover:shadow-cardHover`) that don't exist in the current token set, which
+ * left it dormant. Rebuilt on the live `.card`/`Section`/`StaggerGroup`
+ * primitives and remounted (docs/adr/0003).
  */
-export function Integrations({ className }: { className?: string }) {
-  const reduce = useReducedMotion();
-
+export function Integrations() {
   return (
-    <Section id="integrations" className={className}>
-      <SectionHeading
-        eyebrow={integrationsContent.eyebrow}
-        title={integrationsContent.heading}
-        subtitle={integrationsContent.subheading}
-        maxWidthClass="max-w-3xl"
-      />
-
-      <motion.ul
-        {...getMotionProps(reduce, staggerContainer)}
-        className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
+    <Section
+      id="integrations"
+      tone="alt"
+      heading={{
+        eyebrow: integrationsContent.eyebrow,
+        title: integrationsContent.heading,
+        description: integrationsContent.subheading,
+      }}
+    >
+      <StaggerGroup
+        as="ul"
+        childCount={integrationsContent.items.length}
+        className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
       >
         {integrationsContent.items.map((item) => (
-          <motion.li key={item.slug} variants={staggerItem}>
-            <div className="group flex h-full flex-col items-center justify-center gap-3.5 rounded-card border bg-background-card px-4 py-8 shadow-card transition-shadow duration-200 hover:shadow-cardHover">
+          <StaggerGroupItem as="li" key={item.slug}>
+            <div className="card group flex h-full flex-col items-center justify-center gap-3.5 px-4 py-8 transition-shadow duration-fast ease-clean hover:card-hover">
               <LogoMark integration={item} />
-              <span className="text-xs font-medium text-content-secondary">
+              <span className="text-caption font-medium text-ink-secondary">
                 {item.name}
               </span>
             </div>
-          </motion.li>
+          </StaggerGroupItem>
         ))}
-      </motion.ul>
+      </StaggerGroup>
     </Section>
   );
 }
@@ -49,7 +51,7 @@ function LogoMark({ integration }: { integration: Integration }) {
     <span
       role="img"
       aria-label={integration.name}
-      className="h-8 w-8 bg-content-muted transition-colors duration-200 group-hover:bg-accent"
+      className="h-8 w-8 bg-ink-muted transition-colors duration-fast ease-clean group-hover:bg-signal"
       style={{
         maskImage: `url(${url})`,
         WebkitMaskImage: `url(${url})`,
