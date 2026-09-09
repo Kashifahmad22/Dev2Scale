@@ -1,0 +1,672 @@
+We are going to build a **high-end, production-grade website inspired by the quality, visual impact, animations, interactions, and conversion-focused design of https://klientboost.com/**.
+
+The goal is NOT to copy the website. Use it as a **design and experience benchmark** for the level of quality we want to achieve.
+
+Before writing or implementing any code, I want you to **plan, define, and document the complete system architecture and engineering standards for this project**.
+
+The final system must be:
+
+* Production-grade
+* Scalable
+* Secure
+* Highly performant
+* SEO-friendly
+* Accessibility-compliant
+* Fully responsive
+* Conversion-focused
+* Easy for developers to understand and extend
+* Easy to integrate with future services
+* Easy to maintain for years
+* Structured so that new developers can join the project and understand it quickly
+* Designed to prevent avoidable production mistakes
+
+Do not jump directly into implementation. First establish the architecture, standards, conventions, documentation, development workflow, deployment strategy, and quality gates.
+
+## 1. First Analyze the Reference Website
+
+Analyze https://klientboost.com/ and identify the important patterns behind its experience, including:
+
+* Visual hierarchy
+* Typography
+* Color usage
+* Spacing system
+* Navigation
+* Hero sections
+* CTA placement
+* Interactive elements
+* Scroll-based animations
+* Page transitions
+* Hover interactions
+* Cards
+* Illustrations
+* Micro-interactions
+* Motion design
+* Section transitions
+* Case-study presentation
+* Social proof
+* Lead-generation elements
+* Responsive behavior
+* Mobile experience
+* Conversion-focused patterns
+
+Do NOT blindly copy its implementation or assets.
+
+Instead, extract the **design principles and UX patterns** that make it feel premium and use those principles to establish our own design system.
+
+## 2. Define the Complete System Architecture
+
+Design the complete architecture for this website as if it will be used by a serious real-world company at scale.
+
+Define:
+
+* Frontend architecture
+* Backend architecture
+* API architecture
+* CMS/content architecture
+* Database requirements
+* Authentication if required
+* Lead/contact management
+* Forms
+* Email infrastructure
+* Analytics
+* Event tracking
+* SEO infrastructure
+* Image/media management
+* Third-party integrations
+* Error monitoring
+* Logging
+* Performance monitoring
+* Feature flags if useful
+* Environment management
+* Configuration management
+* Caching strategy
+* Security architecture
+* Deployment architecture
+* CDN strategy
+* Infrastructure requirements
+
+For every major architectural decision, explain:
+
+1. What we are using
+2. Why we are using it
+3. What problem it solves
+4. Alternatives considered
+5. How another developer would integrate with it
+
+The architecture should avoid unnecessary complexity. Use a **modular, scalable architecture**, not over-engineering for the sake of it.
+
+## 3. Technology Stack
+
+Recommend the ideal technology stack for this project.
+
+Evaluate and select technologies for:
+
+* Frontend
+* Backend
+* Database
+* CMS
+* Animation
+* Styling/design system
+* Forms
+* Email
+* Analytics
+* Error monitoring
+* Testing
+* CI/CD
+* Hosting
+* CDN
+* Image optimization
+* Search if required
+* Authentication if required
+
+Prioritize technologies that are:
+
+* Production proven
+* Well maintained
+* Developer friendly
+* Scalable
+* Easy to integrate
+* Fast
+* SEO friendly
+* Appropriate for a modern premium marketing website
+
+Do not select technologies simply because they are popular.
+
+## 4. Frontend Architecture
+
+Define a clean frontend architecture including:
+
+* Folder structure
+* Component architecture
+* Page architecture
+* Layout architecture
+* Shared components
+* UI primitives
+* Sections
+* Reusable animation components
+* Design tokens
+* Typography
+* Colors
+* Spacing
+* Breakpoints
+* Responsive rules
+* Loading states
+* Error states
+* Empty states
+* Accessibility patterns
+* SEO metadata architecture
+* Image handling
+* Font loading
+* Client/server boundaries where applicable
+
+The architecture should make it extremely easy for developers to create new pages and sections without duplicating code.
+
+## 5. Design System
+
+Create a proper design-system strategy.
+
+Define:
+
+* Typography scale
+* Font hierarchy
+* Color tokens
+* Spacing scale
+* Border radius
+* Shadows
+* Container widths
+* Grid system
+* Breakpoints
+* Buttons
+* Inputs
+* Cards
+* Navigation
+* Modals
+* Forms
+* CTA components
+* Badges
+* Icons
+* Section patterns
+
+Everything should be based on reusable design tokens rather than random values scattered throughout the codebase.
+
+## 6. Animation & Motion System
+
+The website should have a premium motion experience similar in quality to KlientBoost.
+
+Define a centralized animation system covering:
+
+* Scroll animations
+* Entrance animations
+* Exit animations
+* Hover animations
+* Button interactions
+* Image animations
+* Text animations
+* Parallax where appropriate
+* Section transitions
+* Page transitions
+* Loading animations
+* Cursor interactions where appropriate
+* Mobile-specific motion behavior
+
+Animations must be:
+
+* Smooth
+* Purposeful
+* Consistent
+* Performant
+* Accessible
+* Reduced/disabled when `prefers-reduced-motion` is enabled
+* Non-blocking
+* Carefully optimized for mobile
+
+Do not allow developers to randomly implement animations differently across the website.
+
+Establish reusable motion primitives and animation conventions.
+
+## 7. Responsive Design
+
+Design mobile-first and ensure the website works properly across:
+
+* Small mobile
+* Large mobile
+* Tablet
+* Laptop
+* Desktop
+* Large desktop
+* Ultra-wide screens
+
+Define:
+
+* Breakpoint strategy
+* Layout behavior
+* Typography scaling
+* Navigation behavior
+* Image behavior
+* Animation behavior
+* Touch interactions
+* CTA behavior
+* Form behavior
+* Performance considerations
+
+The mobile version must feel intentionally designed rather than being a reduced desktop version.
+
+## 8. Performance Architecture
+
+Treat performance as a first-class requirement.
+
+Define standards for:
+
+* Core Web Vitals
+* LCP
+* CLS
+* INP
+* JavaScript bundle size
+* Image optimization
+* Lazy loading
+* Code splitting
+* Font loading
+* Third-party scripts
+* Animation performance
+* Caching
+* CDN
+* Server response time
+* Rendering strategy
+
+Establish concrete performance budgets and production validation rules.
+
+## 9. SEO Architecture
+
+Define a complete SEO system including:
+
+* Metadata
+* Open Graph
+* Twitter/social metadata
+* Canonical URLs
+* Sitemap
+* Robots.txt
+* Structured data/schema
+* Semantic HTML
+* Heading hierarchy
+* Internal linking
+* Image alt text
+* Dynamic page metadata
+* SEO-friendly URLs
+* 404 pages
+* Redirect strategy
+* Indexing strategy
+* Content architecture
+
+SEO should be built into the architecture rather than added at the end.
+
+## 10. Conversion & Lead Generation
+
+Because this is a client-facing business website, design the system around conversion.
+
+Define:
+
+* Primary CTAs
+* Secondary CTAs
+* Contact forms
+* Lead capture
+* Form validation
+* Spam protection
+* Success/failure states
+* Email notifications
+* CRM integration architecture
+* Analytics events
+* Conversion tracking
+* Attribution
+* Thank-you flows
+* Call scheduling if required
+
+The architecture should make it easy to connect future CRM, marketing automation, analytics, payment, or communication systems without rewriting the frontend.
+
+## 11. Analytics & Observability
+
+Define an event-tracking architecture.
+
+Track meaningful events such as:
+
+* Page views
+* CTA clicks
+* Form starts
+* Form submissions
+* Navigation interactions
+* Conversion events
+* Scroll engagement
+* Important user interactions
+
+Also define:
+
+* Error monitoring
+* Application logging
+* Performance monitoring
+* Production alerts
+* Error boundaries
+* Debugging strategy
+
+Developers should be able to identify and diagnose production issues quickly.
+
+## 12. Security
+
+Define security standards for the entire application.
+
+Include:
+
+* Input validation
+* Output sanitization
+* Secure headers
+* HTTPS
+* Environment secrets
+* API security
+* Form abuse protection
+* Rate limiting where necessary
+* Authentication security if applicable
+* Dependency security
+* Supply-chain security
+* CORS policy
+* CSP where appropriate
+* Bot/spam protection
+* Secure logging
+
+Never expose secrets in the frontend or repository.
+
+## 13. Git & GitHub Engineering Rules
+
+Establish strict Git/GitHub standards.
+
+The development workflow must include rules such as:
+
+1. Always pull the latest `main` before beginning work.
+2. Never directly push unfinished work to `main`.
+3. Use feature branches.
+4. Keep commits focused and meaningful.
+5. Never commit secrets, `.env` files, credentials, API keys, build artifacts, or unnecessary files.
+6. Open pull requests for changes.
+7. Run all required validation checks before pushing.
+8. Never merge code that fails required checks.
+9. Resolve merge conflicts carefully.
+10. Keep `main` production-ready at all times.
+
+Define:
+
+* Branch naming
+* Commit conventions
+* Pull-request conventions
+* Code review requirements
+* Merge strategy
+* Branch protection
+* Required checks
+* Release tagging
+* Rollback process
+
+## 14. CI/CD Pipeline
+
+Design a complete GitHub Actions CI/CD pipeline.
+
+The pipeline should automatically perform appropriate checks such as:
+
+* Install dependencies
+* Dependency validation
+* Formatting
+* Linting
+* Type checking
+* Unit tests
+* Integration tests
+* Build validation
+* E2E tests where appropriate
+* Security checks
+* Dependency vulnerability checks
+* Preview deployments
+* Production deployment
+
+Define exactly:
+
+**Pull Request → Validation → Review → Merge → Build → Deploy → Smoke Test → Production**
+
+No code should reach production without passing the required quality gates.
+
+## 15. Environment Strategy
+
+Define separate environments such as:
+
+* Local development
+* Development/staging
+* Preview
+* Production
+
+Explain:
+
+* Environment variables
+* Secrets
+* Database configuration
+* Third-party services
+* API keys
+* Feature flags
+* Deployment configuration
+
+Make it possible for developers to work locally without accidentally affecting production.
+
+## 16. Production Deployment
+
+Design the production deployment architecture.
+
+Include:
+
+* Hosting
+* CDN
+* DNS
+* SSL
+* Environment variables
+* Deployment process
+* Health checks
+* Smoke tests
+* Monitoring
+* Rollbacks
+* Backups where applicable
+* Incident handling
+
+Production deployments must be predictable and reversible.
+
+## 17. Code Quality Rules
+
+Create strict engineering standards.
+
+Define rules for:
+
+* Naming
+* File organization
+* Components
+* Functions
+* Types
+* API contracts
+* Error handling
+* Comments
+* Documentation
+* Reusability
+* Accessibility
+* Performance
+* Security
+
+Avoid:
+
+* Duplicate code
+* Magic values
+* Unnecessary abstractions
+* Giant components
+* Giant functions
+* Dead code
+* Temporary hacks
+* Ignored errors
+* Unvalidated user input
+* Hardcoded secrets
+* Random one-off implementations
+
+Every implementation should be maintainable by another developer.
+
+## 18. Developer Documentation
+
+Create a documentation strategy that includes:
+
+* Architecture documentation
+* Setup guide
+* Local development guide
+* Environment configuration
+* Folder structure
+* Component documentation
+* Design system documentation
+* Animation documentation
+* API documentation
+* Integration guide
+* Deployment guide
+* Git workflow
+* Troubleshooting
+* Production incident guide
+* Contribution guide
+
+A new developer should be able to clone the repository and understand how the system works without needing to ask the original developer everything.
+
+## 19. Integration Architecture
+
+Design the system so future integrations are easy.
+
+For example, we may eventually integrate:
+
+* CRM
+* Email provider
+* Marketing automation
+* Analytics
+* Payment system
+* Scheduling
+* Chat
+* CMS
+* Search
+* Customer portals
+* External APIs
+
+Create clear integration boundaries and adapters so that replacing one provider does not require rewriting the entire application.
+
+## 20. Testing Strategy
+
+Define testing at multiple levels:
+
+* Unit tests
+* Component tests
+* Integration tests
+* API tests
+* E2E tests
+* Visual regression testing where useful
+* Accessibility testing
+* Performance testing
+* Production smoke tests
+
+Define what must be tested before:
+
+* Commit
+* Pull request
+* Merge
+* Deployment
+* Production release
+
+## 21. Production Safety Checklist
+
+Create a mandatory checklist that developers must pass before production deployment.
+
+Include checks for:
+
+* Build
+* Tests
+* Type safety
+* Lint
+* Formatting
+* Security
+* Environment variables
+* SEO
+* Accessibility
+* Performance
+* Analytics
+* Forms
+* Error handling
+* Responsive behavior
+* Browser compatibility
+* Third-party integrations
+* Monitoring
+* Rollback readiness
+
+The objective is to make avoidable production mistakes extremely difficult.
+
+## 22. Definition of Done
+
+Create a strict Definition of Done for every feature.
+
+A feature is not complete simply because "the code works."
+
+It should satisfy the appropriate:
+
+* Functional requirements
+* UX requirements
+* Responsive requirements
+* Accessibility requirements
+* Performance requirements
+* SEO requirements
+* Analytics requirements
+* Testing requirements
+* Documentation requirements
+* Code-quality requirements
+* Security requirements
+* Deployment requirements
+
+## 23. Project Structure
+
+Finally, propose the complete repository structure.
+
+Show the recommended folders and explain the responsibility of each folder.
+
+Keep the structure scalable without introducing unnecessary complexity.
+
+---
+
+# Most Important Requirement
+
+Before implementation, produce a **complete System Design & Engineering Blueprint** for this project.
+
+Do not immediately start coding.
+
+The first deliverable should contain:
+
+1. System architecture
+2. Technology decisions
+3. Architecture diagram
+4. Frontend architecture
+5. Backend architecture
+6. Data/integration architecture
+7. Design system
+8. Animation system
+9. Responsive strategy
+10. Performance strategy
+11. SEO strategy
+12. Security strategy
+13. Analytics/observability
+14. Git/GitHub workflow
+15. CI/CD architecture
+16. Environment strategy
+17. Deployment architecture
+18. Testing strategy
+19. Production quality gates
+20. Repository structure
+21. Documentation structure
+22. Developer rules
+23. Definition of Done
+24. Production deployment checklist
+25. Future scalability and integration strategy
+
+For every major decision, explain the reasoning behind it.
+
+The architecture should be **practical, modern, scalable, and production-ready**, not theoretical.
+
+Think like a **senior/staff-level software architect, frontend engineer, DevOps engineer, security engineer, UX engineer, and technical lead working together**.
+
+The ultimate goal is to create a website that has the **visual quality and conversion power of a premium agency website**, while having an engineering foundation that is **clean, scalable, maintainable, testable, secure, and easy for future developers to extend**.
+
+Do not cut corners. Do not leave important production concerns as "we can add this later." Identify them now and establish the correct foundation before implementation begins.
