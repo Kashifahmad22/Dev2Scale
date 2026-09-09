@@ -93,6 +93,34 @@ on coarse pointers, and under reduced motion. Never on text. Never on anything i
 keyboard navigation, browser find-in-page, and deep links — and they are the fastest way to
 lose a visitor who arrived to check a price.
 
+### 3.1 Pinned scene sequence (added, homepage redesign)
+
+One exception, added deliberately rather than silently: `ScrollStory`
+(`src/components/ui/ScrollStory.tsx`), used exactly once, by `PhaseStory` (the homepage's
+"Build. Automate. Grow." section). This is **scroll-linked, not scroll-jacked** — the
+distinction the rule above doesn't draw, and the reason this isn't a quiet violation of it:
+
+- Native scroll position drives `scrollYProgress` 1:1 via `useScroll`/`useTransform`. Nothing
+  auto-advances, nothing intercepts the wheel or touch input, there is no smooth-scroll
+  override. A visitor scrolling past the section experiences exactly as much native scroll as
+  the section's height demands — no more.
+- **Progressive enhancement, not a fork in content.** Below 1024px, on a coarse pointer, or
+  under `prefers-reduced-motion`, the component renders `fallback` instead — a complete,
+  ordinarily-scrolling stack of the same three phases, not a degraded stub. The rule's actual
+  concerns (keyboard navigation, find-in-page, deep links) simply don't apply on those
+  viewports because the pinned mechanism never mounts there.
+- Non-active scenes are `aria-hidden` and `pointer-events-none` while dimmed, so even on a
+  capable desktop viewport, Tab never lands on content that's visually receded — answering the
+  rule's keyboard concern directly rather than assuming sticky positioning is automatically
+  safe.
+- Tokens: same `EASE_CLEAN`/durations family is not used here — scroll-linked values are a
+  direct function of scroll position, not a timed transition, which is the correct pattern for
+  anything driven by `useTransform` off `scrollYProgress` (there is no "duration" to assign).
+  Distance/opacity/scale ceilings: 56px drift, 0.32 resting opacity (never fully invisible —
+  "previous content remains part of the composition," not gone), 0.94 resting scale.
+- **This does not open the door to more of these.** One instance, one purpose. A second pinned
+  sequence needs its own case made here, not silent reuse of `ScrollStory` because it exists.
+
 ---
 
 ## 4. Interaction motion

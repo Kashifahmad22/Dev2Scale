@@ -12,3 +12,4 @@ after acceptance; it is superseded by a new one, so the reasoning trail stays in
 | --- | --- | --- |
 | [0001](./0001-dark-premium-theme.md) | Dark-premium theme derived from the brand assets | **Superseded by 0002** |
 | [0002](./0002-bold-editorial-light-theme.md) | Bold-editorial light theme, benchmarked against KlientBoost | **Accepted** |
+| [0003](./0003-content-depth-and-product-positioning.md) | Homepage content depth, product positioning, and the pinned phase sequence | **Accepted** |
