@@ -1,89 +1,153 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Dev2Scale design system — "Bright & trustworthy" (light).
- * White canvas, deep-navy bold sans headlines, a royal-blue + cyan→indigo
- * gradient accent, rounded-pill buttons, and soft shadows. A dark footer band
- * anchors the page. Tokens mirror the CSS variables in src/app/globals.css.
+ * Dev2Scale design system — "Bold editorial" (light).
+ *
+ * This file is a MIRROR, never a second source of values: every entry points
+ * at a CSS custom property defined in `src/app/globals.css`. The theme has
+ * exactly one definition, which is what makes a future retheme a variable
+ * scope rather than a refactor.
+ *
+ * Adding a token = add the `--var` in globals.css, then add the mapping here.
+ * Raw hex, rgb() or arbitrary Tailwind values (`text-[13px]`, `bg-[#123]`)
+ * outside globals.css are review blockers.
  */
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        background: {
-          DEFAULT: "#ffffff",
-          secondary: "#f5f7fb", // very light cool grey for alternating sections
-          card: "#ffffff",
-          elevated: "#ffffff",
-          dark: "#0b0a16", // footer / dark anchor band
+        paper: {
+          DEFAULT: "var(--paper)",
+          alt: "var(--paper-alt)",
+          sunk: "var(--paper-sunk)",
         },
-        content: {
-          DEFAULT: "#0b0a24", // deep navy near-black (headings, primary text)
-          secondary: "#4e5564",
-          muted: "#8792a6",
+        band: {
+          dark: "var(--band-dark)",
         },
-        accent: {
-          DEFAULT: "#2f57e2", // royal blue
-          hover: "#2546c8",
-          soft: "#eef3ff", // light blue tint for chips / surfaces
+        ink: {
+          DEFAULT: "var(--ink)",
+          secondary: "var(--ink-secondary)",
+          muted: "var(--ink-muted)",
+          inverse: "var(--ink-inverse)",
         },
-        success: {
-          DEFAULT: "#167a57",
-          soft: "#ecf8f2",
+        action: {
+          DEFAULT: "var(--action)",
+          hover: "var(--action-hover)",
+          press: "var(--action-press)",
+          tint: "var(--action-tint)",
         },
-        warning: {
-          DEFAULT: "#9a5a12",
-          soft: "#fff6e8",
+        signal: {
+          DEFAULT: "var(--signal)",
+          hover: "var(--signal-hover)",
         },
-      },
-      fontFamily: {
-        // Wired to next/font CSS variables defined in layout.tsx
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
-      },
-      borderRadius: {
-        sm: "4px",
-        DEFAULT: "8px",
-        card: "12px",
-        lg: "20px",
+        azure: "var(--azure)",
+        ember: {
+          DEFAULT: "var(--ember)",
+          ink: "var(--ember-ink)",
+        },
+        gold: {
+          DEFAULT: "var(--gold)",
+          ink: "var(--gold-ink)",
+        },
+        line: {
+          DEFAULT: "var(--line)",
+          strong: "var(--line-strong)",
+          ink: "var(--line-ink)",
+        },
+        success: { DEFAULT: "var(--success)", bg: "var(--success-bg)" },
+        warning: { DEFAULT: "var(--warning)", bg: "var(--warning-bg)" },
+        danger: { DEFAULT: "var(--danger)", bg: "var(--danger-bg)" },
       },
       borderColor: {
-        DEFAULT: "rgba(13,18,40,0.08)",
-        subtle: "rgba(13,18,40,0.06)",
-        strong: "rgba(13,18,40,0.16)",
+        DEFAULT: "var(--line)",
+        strong: "var(--line-strong)",
+        ink: "var(--line-ink)",
+      },
+      ringColor: {
+        DEFAULT: "var(--ring)",
+      },
+      fontFamily: {
+        // Wired to the next/font CSS variables declared in app/layout.tsx.
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        // [size, { lineHeight, letterSpacing }] — the whole sanctioned scale.
+        // The tight display tracking is the system's signature.
+        "display-1": [
+          "var(--fs-display-1)",
+          { lineHeight: "1.04", letterSpacing: "-0.05em" },
+        ],
+        "display-2": [
+          "var(--fs-display-2)",
+          { lineHeight: "1.1", letterSpacing: "-0.045em" },
+        ],
+        "display-3": [
+          "var(--fs-display-3)",
+          { lineHeight: "1.18", letterSpacing: "-0.03em" },
+        ],
+        title: [
+          "var(--fs-title)",
+          { lineHeight: "1.35", letterSpacing: "-0.015em" },
+        ],
+        "body-lg": ["var(--fs-body-lg)", { lineHeight: "1.6" }],
+        body: ["var(--fs-body)", { lineHeight: "1.65" }],
+        "body-sm": ["var(--fs-body-sm)", { lineHeight: "1.6" }],
+        caption: ["var(--fs-caption)", { lineHeight: "1.5" }],
+        eyebrow: [
+          "var(--fs-eyebrow)",
+          { lineHeight: "1.2", letterSpacing: "0.14em" },
+        ],
+      },
+      letterSpacing: {
+        // Positive tracking for uppercase control labels. Uppercase text needs
+        // it opened up; the display scale goes the other way (-0.05em).
+        cta: "0.04em",
+        eyebrow: "0.14em",
+      },
+      borderRadius: {
+        sm: "var(--radius-sm)",
+        DEFAULT: "var(--radius)",
+        card: "var(--radius-card)",
+        tile: "var(--radius-tile)",
+        pill: "var(--radius-pill)",
+      },
+      spacing: {
+        gutter: "var(--gutter)",
+        "section-y": "var(--section-y)",
+        "section-y-tight": "var(--section-y-tight)",
+        "gap-grid": "var(--gap-grid)",
+        "gap-stack": "var(--gap-stack)",
+        nav: "var(--nav-h)",
+      },
+      maxWidth: {
+        container: "var(--container)",
+        "container-wide": "var(--container-wide)",
+        "container-narrow": "var(--container-narrow)",
       },
       boxShadow: {
-        card: "0 1px 2px 0 rgba(13,18,40,0.04), 0 12px 32px -16px rgba(13,18,40,0.16)",
-        cardHover:
-          "0 2px 6px 0 rgba(13,18,40,0.06), 0 22px 50px -24px rgba(47,87,226,0.32)",
-        nav: "0 10px 30px -16px rgba(13,18,40,0.18)",
-        band: "0 30px 60px -30px rgba(47,87,226,0.5)",
+        sm: "var(--shadow-sm)",
+        card: "var(--shadow-card)",
+        "card-hover": "var(--shadow-card-hover)",
+        nav: "var(--shadow-nav)",
+        offset: "var(--shadow-offset)",
+        "offset-action": "var(--shadow-offset-action)",
       },
       backgroundImage: {
-        // Signature cyan→indigo accent gradient (buttons + small accents)
-        "accent-gradient": "linear-gradient(120deg, #2f9dc0 0%, #3634be 92%)",
-        // Full-width brand band (trust bar + final CTA)
-        "band-gradient":
-          "linear-gradient(120deg, #2f9dc0 0%, #2f57e2 52%, #3634be 100%)",
+        "grad-system": "var(--grad-system)",
       },
       transitionTimingFunction: {
-        clean: "cubic-bezier(0.16, 1, 0.3, 1)",
+        DEFAULT: "var(--ease)",
+        clean: "var(--ease)",
+        exit: "var(--ease-in)",
       },
-      keyframes: {
-        "pulse-node": {
-          "0%, 100%": { opacity: "1", transform: "scale(1)" },
-          "50%": { opacity: "0.78", transform: "scale(0.985)" },
-        },
-        blink: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.3" },
-        },
-      },
-      animation: {
-        "pulse-node": "pulse-node 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite",
-        blink: "blink 1.4s ease-in-out infinite",
+      transitionDuration: {
+        DEFAULT: "var(--dur)",
+        fast: "var(--dur-fast)",
+        slow: "var(--dur-slow)",
+        reveal: "var(--dur-reveal)",
       },
     },
   },

@@ -3,69 +3,214 @@
 @tailwind utilities;
 
 /*
- * Dev2Scale design system — "Bright & trustworthy" (light).
- * CSS variable mirror of tailwind.config.ts. Edit tokens here and there together.
+ * Dev2Scale design system — "Bold editorial" (light).
+ *
+ * DIRECTION (supersedes docs/adr/0001-dark-premium-theme.md; see adr/0002):
+ * a white canvas, very bold and very tightly tracked display type, near-black
+ * navy ink, one deep-ember action colour, and the logo's ember/gold/blue kept
+ * strictly as phase accents. Proof is carried by real artefacts — ad-account
+ * screenshots, dashboards, live-site captures — never illustration.
+ *
+ * Benchmarked against klientboost.com, measured rather than described: its
+ * display type is an 800-weight sans at -0.05em tracking on white, its action
+ * colour is a warm coral, its bands alternate #FFFFFF / #F5F6F7, and its
+ * signature device is a solid ink bar set behind a phrase inside the headline.
+ * We take the typographic discipline and the band rhythm; we do not take the
+ * cartoon illustration, the mascots or the handwritten layer.
+ *
+ * THIS FILE IS THE SOURCE OF TRUTH. tailwind.config.ts mirrors these variables
+ * so the tokens are available as utilities. Never hardcode a colour, radius,
+ * duration or size anywhere else.
+ *
+ * Contrast figures in the comments are computed with the WCAG 2.1 relative
+ * luminance formula against BOTH surfaces a token can land on (--paper and
+ * --paper-alt), because a value that passes on white can still fail on the
+ * band. They are measurements, not estimates.
  */
 :root {
-  /* Light backgrounds */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f7fb;
-  --bg-card: #ffffff;
-  --bg-elevated: #ffffff;
-  --bg-dark: #0b0a16;
+  /* ---- Canvas ---------------------------------------------------------- */
+  --paper: #ffffff; /* page */
+  --paper-alt: #f5f6f7; /* alternating band — the rhythm device */
+  --paper-sunk: #eceef1; /* inputs, wells, inset surfaces */
+  --band-dark: #0b1220; /* the rare dark band: footer, and nothing else */
 
-  /* Deep navy text + greys */
-  --text-primary: #0b0a24;
-  --text-secondary: #4e5564;
-  --text-muted: #8792a6;
+  /* ---- Ink ------------------------------------------------------------- */
+  --ink: #0b1220; /* 18.7:1 on paper, 17.3:1 on band — headlines + body */
+  --ink-secondary: #4c5772; /* 7.2:1 / 6.7:1 — supporting copy */
+  --ink-muted: #666f85; /* 5.0:1 / 4.7:1 — the floor for any text */
+  --ink-inverse: #ffffff; /* text on --band-dark and on filled accents */
 
-  /* Royal-blue accent */
-  --accent: #2f57e2;
-  --accent-hover: #2546c8;
-  --accent-soft: #eef3ff;
-  --success: #167a57;
-  --success-soft: #ecf8f2;
-  --warning: #9a5a12;
-  --warning-soft: #fff6e8;
+  /* ---- Action ---------------------------------------------------------- */
+  /* Deep ember. White text on it measures 4.6:1, so the primary CTA passes AA
+   * at any size — the bright --ember below does NOT (3.0:1) and is never a
+   * button fill. This is the inverse of the dark theme, where signal was the
+   * fill and ember was safe as ink. */
+  --action: #cb4c1b;
+  --action-hover: #b24217; /* 5.7:1 with white */
+  --action-press: #9a3913;
+  --action-tint: #fdf1eb; /* wash behind an action-adjacent surface */
 
-  /* Light hairlines */
-  --border-default: rgba(13, 18, 40, 0.08);
-  --border-hover: rgba(13, 18, 40, 0.16);
+  /* ---- Brand / phase accents ------------------------------------------- */
+  /* Read straight off the logo, left to right (docs/05 §1). On a light canvas
+   * their legality inverts: signal is now legal as ink, azure and gold are
+   * fill-only, and ember needs its darkened --ember-ink to carry text. */
+  --signal: #0e5bc5; /* 6.3:1 / 5.8:1 — legal as ink here. Phase 03 Grow. */
+  --signal-hover: #0b4ea8;
+  --azure: #2fb1ff; /* 2.4:1 — FILL AND GRAPHICS ONLY, never text */
+  --ember: #f56935; /* 3.0:1 — fill/graphics only. Phase 01 Build. */
+  --ember-ink: #b24217; /* 5.7:1 — the text-safe ember */
+  --gold: #ffc839; /* 1.6:1 — fill only; --ink on gold is 12.1:1 */
+  --gold-ink: #8a6100; /* 5.5:1 — the text-safe gold. Phase 02 Automate. */
 
-  /* Radius */
+  /* ---- Lines ----------------------------------------------------------- */
+  --line: rgb(11 18 32 / 10%); /* default hairline */
+  --line-strong: rgb(11 18 32 / 18%);
+  --line-ink: var(--ink); /* the deliberate 2px editorial rule */
+
+  /* ---- Feedback -------------------------------------------------------- */
+  --success: #0f7a52;
+  --success-bg: #eaf7f1;
+  --warning: #8a5a00;
+  --warning-bg: #fff6e6;
+  --danger: #b4231d;
+  --danger-bg: #fdeceb;
+
+  /* ---- Focus ----------------------------------------------------------- */
+  /* Signal blue, which clears 3:1 against paper, the alt band and the dark
+   * band — so one ring works everywhere and focus is never restyled per
+   * surface. */
+  --ring: var(--signal);
+
+  /* ---- Elevation ------------------------------------------------------- */
+  /* On white, elevation is a tight contact shadow plus a wide soft ambient —
+   * the opposite problem from the dark theme, where shadows barely read and
+   * elevation had to come from border luminance and a lit rim. */
+  --shadow-sm: 0 1px 2px 0 rgb(11 18 32 / 6%);
+  --shadow-card:
+    0 1px 3px 0 rgb(11 18 32 / 8%), 0 12px 28px -14px rgb(11 18 32 / 14%);
+  --shadow-card-hover:
+    0 2px 6px 0 rgb(11 18 32 / 10%), 0 22px 44px -20px rgb(11 18 32 / 20%);
+  --shadow-nav: 0 1px 0 0 var(--line), 0 8px 24px -18px rgb(11 18 32 / 24%);
+  /* The editorial hard offset. One device, used on at most one element per
+   * section — a stack of them reads as a template. */
+  --shadow-offset: 4px 4px 0 0 var(--ink);
+  --shadow-offset-action: 4px 4px 0 0 var(--action-press);
+
+  /* ---- Gradient: one, and only one ------------------------------------- */
+  /* THE LOGO, LITERALLY: ember → gold → azure, read left to right. Appears at
+   * most ONCE per page, on the Build→Automate→Grow connector. There is no
+   * second gradient in this system; a "subtle" background gradient is the
+   * fastest way to make a white canvas look generated. */
+  --grad-system: linear-gradient(90deg, #f56935 0%, #ffc839 50%, #2fb1ff 100%);
+
+  /* ---- Radius ---------------------------------------------------------- */
+  /* Tighter than the dark theme's soft tiles. 6px buttons read considered;
+   * pills read friendly-startup, and are for chips only. */
   --radius-sm: 4px;
-  --radius: 8px;
-  --radius-card: 12px;
-  --radius-lg: 20px;
-  --section-space: clamp(5rem, 9vw, 8rem);
-  --container-width: 80rem;
+  --radius: 6px;
+  --radius-card: 10px;
+  --radius-tile: 14px;
+  --radius-pill: 9999px;
+
+  /* ---- Layout ---------------------------------------------------------- */
+  --container: 75rem; /* 1200px */
+  --container-wide: 82.5rem; /* 1320px */
+  --container-narrow: 42rem; /* 672px — prose measure, 62–72 chars */
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --section-y: clamp(4rem, 8vw, 7rem);
+  --section-y-tight: clamp(2.5rem, 5vw, 4rem);
+  --gap-grid: clamp(1rem, 2vw, 1.5rem);
+  --gap-stack: 1.5rem;
+  --nav-h: 4rem;
+
+  /* ---- Type scale ------------------------------------------------------ */
+  /* The tight tracking is the signature. An 800-weight sans at -0.05em is the
+   * single biggest reason the benchmark reads as designed rather than
+   * defaulted, and it is the one thing worth copying outright. */
+  --fs-display-1: clamp(2.75rem, 6.5vw, 5.25rem);
+  --fs-display-2: clamp(2rem, 4.2vw, 3.25rem);
+  --fs-display-3: clamp(1.5rem, 2.4vw, 2.125rem);
+  --fs-title: 1.1875rem;
+  --fs-body-lg: clamp(1.0625rem, 1.25vw, 1.25rem);
+  --fs-body: 1.0625rem;
+  --fs-body-sm: 0.9375rem;
+  --fs-caption: 0.8125rem;
+  --fs-eyebrow: 0.6875rem;
+  --tracking-cta: 0.04em; /* uppercase control labels need opening up */
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 400ms;
+  --dur-reveal: 600ms;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nav-h: 4.5rem;
+  }
 }
 
 @layer base {
   * {
-    border-color: var(--border-default);
+    border-color: var(--line);
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 96px;
+    /* Anchored sections must clear the sticky nav. */
+    scroll-padding-top: calc(var(--nav-h) + 1.5rem);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--paper);
   }
 
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: var(--paper);
+    color: var(--ink);
+    /* No horizontal overflow, ever (docs/07 §8). */
+    overflow-x: hidden;
   }
 
-  /* Bold sans display for top-level headings. Card titles (h3) inherit body. */
+  /*
+   * Display face on h1/h2 only. Card titles (h3) stay in the body face.
+   *
+   * Weight 800 — and note this is the INVERSE of the dark theme's rule. Dark
+   * text on a light background optically *loses* weight, so headlines go one
+   * step heavier here, where on the dark canvas they went one step lighter.
+   */
   h1,
   h2 {
     font-family: var(--font-display), system-ui, sans-serif;
     font-weight: 800;
-    letter-spacing: -0.022em;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
   }
 
+  h1 {
+    letter-spacing: -0.05em;
+  }
+
+  /* Tabular figures so counters and prices never jitter. */
+  .tabular,
+  [data-metric] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--ink);
+    color: var(--ink-inverse);
+  }
+
+  /* Backstop for reduced motion — the primary layer is getMotionProps(). */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -78,67 +223,88 @@
       transition-duration: 0.001ms !important;
     }
   }
-
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-
-  ::selection {
-    background-color: rgba(47, 87, 226, 0.16);
-    color: #0b0a24;
-  }
 }
 
 @layer utilities {
-  /* Frosted translucent surface for the sticky nav. */
-  .glass {
-    background-color: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-default);
+  /* ---- The highlight bar ----------------------------------------------
+   * The benchmark's signature headline device: a solid ink bar set behind one
+   * phrase, so a single headline carries its own emphasis without a second
+   * type size or a colour change. `box-decoration-break: clone` is what keeps
+   * the bar intact when the phrase wraps across lines — without it the device
+   * falls apart at exactly the widths that matter on mobile.
+   *
+   * Rules: at most ONE highlighted phrase per headline, and it must be the
+   * phrase that carries the claim. Two highlights is no emphasis.
+   */
+  .highlight {
+    background-color: var(--ink);
+    color: var(--ink-inverse);
+    padding: 0.02em 0.22em 0.1em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
-  /* Solid white card surface with a soft shadow — the default panel. */
-  .panel {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-default);
-    box-shadow:
-      0 1px 2px 0 rgba(13, 18, 40, 0.04),
-      0 12px 32px -16px rgba(13, 18, 40, 0.16);
+  /* Warm variant, for a headline on a section that already carries ink.
+   * --ink on --ember measures 6.2:1. */
+  .highlight-ember {
+    background-color: var(--ember);
+    color: var(--ink);
+    padding: 0.02em 0.22em 0.1em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
-  /* Shared elevated surface for work, pricing, and media modules. */
-  .surface-elevated {
-    background-color: var(--bg-elevated);
-    border: 1px solid var(--border-default);
-    box-shadow:
-      0 1px 2px 0 rgba(13, 18, 40, 0.04),
-      0 18px 44px -28px rgba(13, 18, 40, 0.2);
+  /* ---- Surfaces -------------------------------------------------------- */
+  .card {
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
   }
 
-  /* Editorial metadata: quiet, compact, and intentionally technical. */
+  .card-hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Flat surface for dense content, where a shadow would add noise. */
+  .surface-sunk {
+    background-color: var(--paper-sunk);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+  }
+
+  /* The editorial hard offset — a 2px ink rule plus a solid offset shadow.
+   * Max one per section (see --shadow-offset). */
+  .offset-frame {
+    background-color: var(--paper);
+    border: 2px solid var(--line-ink);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-offset);
+  }
+
+  /* ---- The one gradient ------------------------------------------------ */
+  .grad-system {
+    background-image: var(--grad-system);
+  }
+
+  /* ---- Editorial metadata: quiet, compact, intentionally technical ----- */
   .meta-label {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
+    font-size: var(--fs-eyebrow);
     font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     line-height: 1.2;
     text-transform: uppercase;
   }
 
-  /* Subtle dotted grid used behind the hero — clean, techy, trustworthy. */
-  .dot-grid {
-    background-image: radial-gradient(
-      rgba(47, 87, 226, 0.12) 1px,
-      transparent 1px
-    );
-    background-size: 26px 26px;
-  }
-
-  .hairline {
-    border-color: var(--border-default);
+  /* Faint ruled grid, for a hero backdrop only. Light enough that it reads as
+   * paper texture rather than as a table. */
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -147,5 +313,14 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Horizontal snap rail — mobile pricing / work carousels (docs/07 §2). */
+  .snap-rail {
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+  .snap-rail > * {
+    scroll-snap-align: center;
   }
 }
