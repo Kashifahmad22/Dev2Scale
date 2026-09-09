@@ -44,18 +44,39 @@ export function CaseStudyCard({ study, href, className }: CaseStudyCardProps) {
             </span>
           ) : null}
         </div>
-        <h3 className="mt-5 text-xl font-bold tracking-tight text-content">
+        <h3 className="text-content mt-5 text-xl font-bold tracking-tight">
           {placeholder ? study.placeholderTitle : study.projectTitle}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-content-secondary">
+        <p className="text-content-secondary mt-3 text-sm leading-relaxed">
           {placeholder ? study.placeholderDescription : study.resultSummary}
         </p>
-        {metric ? <ResultMetric metric={metric} className="mt-6" /> : null}
+        {metric ? (
+          // ResultMetric requires a source alongside a verified value, so the
+          // flag on the content decides which shape is passed.
+          metric.verified ? (
+            <ResultMetric
+              value={metric.value}
+              label={metric.label}
+              unit={metric.unit}
+              verified
+              source={metric.description ?? "Client-reported"}
+              className="mt-6"
+            />
+          ) : (
+            <ResultMetric
+              value={metric.value}
+              label={metric.label}
+              unit={metric.unit}
+              verified={false}
+              className="mt-6"
+            />
+          )
+        ) : null}
         {!placeholder && study.client ? (
-          <p className="mt-6 text-sm font-medium text-content">
+          <p className="text-content mt-6 text-sm font-medium">
             {study.client}
             {study.industry ? (
-              <span className="font-normal text-content-secondary">
+              <span className="text-content-secondary font-normal">
                 {" "}
                 · {study.industry}
               </span>
@@ -66,7 +87,7 @@ export function CaseStudyCard({ study, href, className }: CaseStudyCardProps) {
           <Button
             href={href}
             variant="ghost"
-            className="mt-6 !px-0 font-semibold text-content"
+            className="text-content mt-6 !px-0 font-semibold"
           >
             See case study <ArrowUpRight size={16} />
           </Button>

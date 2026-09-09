@@ -1,89 +1,127 @@
-import { cn } from "@/lib/utils";
+import { Container, type ContainerWidth } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import type { PhaseId } from "@/content/growth-model";
+import { cn } from "@/lib/utils";
+
+/**
+ * Section — the one shell every page section goes through.
+ *
+ * It owns: the band tone, vertical rhythm, container width, the scroll offset
+ * that clears the sticky nav, the `aria-labelledby` wiring, and the optional
+ * heading block. Hand-rolling a `<section>` wrapper or a per-section header is
+ * a review blocker, because that is how a site ends up with fourteen slightly
+ * different vertical paddings (docs/04 §1).
+ *
+ * BAND RHYTHM. `tone` alternates `paper` / `alt` down the page, and that
+ * alternation is a design device rather than decoration: two or three
+ * deliberately short sections between the heavy ones is what makes the heavy
+ * ones feel considered. Use `spacing="tight"` for those short bands.
+ *
+ * `dark` exists for exactly one section per page — the footer (ADR 0002).
+ * Anything else on dark reintroduces the vocabulary that theme rejected.
+ */
+type Tone =
+  | "paper"
+  | "alt"
+  | "dark"
+  /** @deprecated Alias of `paper`, retained for dormant sections. */
+  | "primary"
+  /** @deprecated Alias of `alt`, retained for dormant sections. */
+  | "secondary";
+
+const TONE_CLASSES: Record<Tone, string> = {
+  paper: "bg-paper text-ink",
+  alt: "bg-paper-alt text-ink",
+  dark: "bg-band-dark text-ink-inverse",
+  primary: "bg-paper text-ink",
+  secondary: "bg-paper-alt text-ink",
+};
 
 interface SectionProps {
   children: React.ReactNode;
   id?: string;
-  className?: string;
-  /** Inner container className override (max-width / padding tweaks). */
-  containerClassName?: string;
-  /** Background tone — maps to the design-system surfaces. */
-  tone?: "primary" | "secondary";
-  /** Removes default vertical padding when a section needs custom spacing. */
-  flush?: boolean;
-  /** Optional integrated section header for new agency sections. */
+  tone?: Tone;
+  /** `tight` for the short bands between heavy sections. */
+  spacing?: "default" | "tight" | "none";
+  width?: ContainerWidth;
+  /** Integrated heading block. Omit for sections that supply their own. */
   heading?: {
+    title: React.ReactNode;
     eyebrow?: string;
-    title: string;
-    description?: string;
-    align?: "center" | "left";
+    description?: React.ReactNode;
+    align?: "left" | "center";
+    as?: "h1" | "h2" | "h3";
+    phase?: PhaseId;
+    /** @deprecated Retained for dormant sections. */
     maxWidthClass?: string;
   };
-  /** Optional content aligned alongside the integrated heading. */
+  /** Content aligned alongside the heading — usually a ghost Button. */
   headerAside?: React.ReactNode;
-  /** Lets a child deliberately span the normal container width. */
+  className?: string;
+  containerClassName?: string;
+  /** @deprecated Use `spacing="none"`. Retained for dormant sections. */
+  flush?: boolean;
+  /** Lets a child deliberately break out of the container width. */
   fullWidthContent?: boolean;
 }
 
-/**
- * Standard section shell: full-width tone background + a centered, padded
- * container. Keeps horizontal padding consistent (min ~5–6% each side) and
- * vertical rhythm uniform across all 12 sections.
- */
+const SPACING_CLASSES = {
+  default: "py-section-y",
+  tight: "py-section-y-tight",
+  none: "",
+} as const;
+
 export function Section({
   children,
   id,
-  className,
-  containerClassName,
-  tone = "primary",
-  flush = false,
+  tone = "paper",
+  spacing = "default",
+  width = "default",
   heading,
   headerAside,
+  className,
+  containerClassName,
+  flush = false,
   fullWidthContent = false,
 }: SectionProps) {
+  // A section with a heading gets an accessible name from it. Without one it
+  // is a plain region, which is correct — an unnamed landmark is worse than no
+  // landmark, because it clutters the screen-reader landmark list.
+  const headingId = heading && id ? `${id}-heading` : undefined;
+  const resolvedSpacing = flush ? "none" : spacing;
+
   return (
     <section
       id={id}
+      aria-labelledby={headingId}
       className={cn(
         "relative w-full",
-        tone === "secondary" ? "bg-background-secondary" : "bg-background",
-        !flush && "py-20 sm:py-24 lg:py-32",
-        // scroll-margin so anchored sections clear the sticky navbar
-        id && "scroll-mt-24",
+        TONE_CLASSES[tone],
+        SPACING_CLASSES[resolvedSpacing],
+        // Anchored sections must clear the sticky nav.
+        id && "scroll-mt-nav",
         className,
       )}
     >
-      <div
-        className={cn(
-          "mx-auto w-full max-w-[var(--container-width)] px-5 sm:px-8 lg:px-10",
-          containerClassName,
-        )}
-      >
+      <Container width={width} className={containerClassName}>
         {heading ? (
-          <div
-            className={cn(
-              "mb-12 gap-8 lg:mb-16",
-              headerAside
-                ? "lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
-                : "",
-            )}
-          >
+          <div className="mb-12 lg:mb-16">
             <SectionHeading
-              eyebrow={heading.eyebrow}
+              id={headingId}
               title={heading.title}
-              subtitle={heading.description}
+              eyebrow={heading.eyebrow}
+              description={heading.description}
               align={heading.align}
+              as={heading.as}
+              phase={heading.phase}
               maxWidthClass={heading.maxWidthClass}
+              action={headerAside}
+              onDark={tone === "dark"}
             />
-            {headerAside ? (
-              <div className="mt-6 lg:mt-0">{headerAside}</div>
-            ) : null}
           </div>
         ) : null}
-        <div className={cn(fullWidthContent && "-mx-5 sm:-mx-8 lg:-mx-10")}>
-          {children}
-        </div>
-      </div>
+        <div className={cn(fullWidthContent && "-mx-gutter")}>{children}</div>
+      </Container>
     </section>
   );
 }

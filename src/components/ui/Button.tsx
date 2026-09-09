@@ -1,96 +1,148 @@
 "use client";
 
 import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
-import { EASE_CLEAN } from "@/lib/animations";
+import { EASE_CLEAN, DUR, PRESS_SCALE } from "@/lib/animations";
+import { track, type AnalyticsProps } from "@/lib/analytics/track";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "dark" | "inverse" | "ghost";
+/**
+ * Button — the only interactive CTA primitive.
+ *
+ * Renders a real `<a>` when `href` is supplied, otherwise a real `<button>`.
+ * Never a clickable `<div>`, so keyboard and screen-reader behaviour comes free
+ * rather than being re-implemented per call site.
+ *
+ * Style, per ADR 0002: 6px radius (pills read friendly-startup; 6px reads
+ * considered), UPPERCASE with positive tracking, and `--action` as the only
+ * fill colour — the bright `--ember` measures 3.0:1 with white text and is
+ * therefore never a button background.
+ *
+ * Every button takes an optional `analytics` prop and fires `cta_click`
+ * itself, so a CTA cannot ship untracked (docs/10 §3). The provider layer is
+ * still a no-op stub; the call sites are what matter now.
+ */
+
+type Variant =
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "onDark"
+  /** @deprecated Alias of `onDark`, retained for dormant sections. */
+  | "inverse"
+  /** @deprecated Alias of `primary`, retained for dormant sections. */
+  | "dark";
+
 type Size = "sm" | "md" | "lg";
 
 interface StyleProps {
   variant?: Variant;
   size?: Size;
+  /** Fires `cta_click` on activation. */
+  analytics?: AnalyticsProps;
 }
 
-/** Anchor variant (external links / Calendly / smooth-scroll targets). */
 type AnchorProps = StyleProps & HTMLMotionProps<"a"> & { href: string };
-/** Native button variant (onClick handlers, e.g. tab toggles). */
-type ButtonElProps = StyleProps & HTMLMotionProps<"button"> & { href?: undefined };
+type ButtonElProps = StyleProps &
+  HTMLMotionProps<"button"> & { href?: undefined };
 
 type ButtonProps = AnchorProps | ButtonElProps;
 
 const VARIANT_CLASSES: Record<Variant, string> = {
-  // Signature cyan→indigo gradient pill
+  // The one primary. One per viewport.
   primary:
-    "rounded-full bg-accent-gradient text-white shadow-[0_12px_30px_-12px_rgba(47,87,226,0.55)] hover:opacity-95",
-  // White outline pill
+    "bg-action text-ink-inverse hover:bg-action-hover active:bg-action-press",
+  // 1px ink outline on paper — quiet, but unmistakably a button.
   secondary:
-    "rounded-full border bg-white text-content hover:border-strong hover:bg-background-secondary",
-  // Solid navy pill (nav CTA)
-  dark: "rounded-lg bg-content text-white hover:bg-content/90",
-  // White pill for use on dark / gradient bands
-  inverse:
-    "rounded-full bg-white text-accent shadow-[0_12px_30px_-12px_rgba(13,18,40,0.35)] hover:bg-white/92",
-  ghost: "text-content-secondary hover:text-content",
+    "border border-line-strong bg-paper text-ink hover:border-ink hover:bg-paper-alt",
+  // In-body tertiary. Underline on hover rather than a background change.
+  ghost: "text-signal underline-offset-4 hover:underline decoration-2",
+  // For the dark footer band.
+  onDark: "bg-paper text-ink hover:bg-paper-alt",
+  inverse: "bg-paper text-ink hover:bg-paper-alt",
+  dark: "bg-action text-ink-inverse hover:bg-action-hover active:bg-action-press",
 };
 
+/** Ghost is inline text, so it opts out of the fixed control heights. */
 const SIZE_CLASSES: Record<Size, string> = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-5 text-sm",
-  lg: "h-12 px-7 text-base",
+  sm: "h-10 px-5 text-body-sm",
+  md: "h-12 px-6 text-body-sm",
+  lg: "h-14 px-7 text-body",
 };
 
-/**
- * Custom button with primary / secondary / ghost variants. Renders as an <a>
- * when `href` is supplied, otherwise a native <button>. Hover lift uses the
- * design-system scale(1.01) and collapses to a no-op under reduced motion.
- * Typed against Framer Motion's HTMLMotionProps so all native attributes pass
- * through without DOM/motion event-handler conflicts.
- */
 export function Button(props: ButtonProps) {
   const {
     variant = "primary",
     size = "md",
+    analytics,
     className,
     children,
     ...rest
   } = props;
   const reduce = useReducedMotion();
+  const isGhost = variant === "ghost";
 
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 font-medium",
-    "transition-all duration-150 ease-clean",
+    "inline-flex items-center justify-center gap-2",
+    "font-semibold uppercase tracking-cta",
+    "transition-colors duration-fast ease-clean",
     "focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
+    !isGhost && "rounded",
+    isGhost ? "text-body-sm" : SIZE_CLASSES[size],
     VARIANT_CLASSES[variant],
-    SIZE_CLASSES[size],
     className,
   );
 
-  const hover = reduce ? undefined : { scale: 1.01 };
-  const tap = reduce ? undefined : { scale: 0.99 };
-  const transition = { duration: 0.15, ease: EASE_CLEAN };
+  // Press is the only motion here. Hover is a CSS colour transition, because a
+  // JS-driven hover on a button is 30KB of orchestration for a state CSS
+  // already does (docs/06 §4).
+  const tap = reduce ? undefined : { scale: PRESS_SCALE };
+  const transition = { duration: DUR, ease: EASE_CLEAN };
+
+  const label =
+    analytics?.label ?? (typeof children === "string" ? children : undefined);
 
   if (typeof props.href === "string") {
+    const anchorRest = rest as HTMLMotionProps<"a">;
     return (
       <motion.a
         className={classes}
-        whileHover={hover}
         whileTap={tap}
         transition={transition}
-        {...(rest as HTMLMotionProps<"a">)}
+        {...anchorRest}
+        onClick={(event) => {
+          if (analytics) {
+            track({
+              name: "cta_click",
+              location: analytics.location,
+              label: label ?? "",
+              href: props.href,
+            });
+          }
+          anchorRest.onClick?.(event);
+        }}
       >
         {children}
       </motion.a>
     );
   }
 
+  const buttonRest = rest as HTMLMotionProps<"button">;
   return (
     <motion.button
       className={classes}
-      whileHover={hover}
       whileTap={tap}
       transition={transition}
-      {...(rest as HTMLMotionProps<"button">)}
+      {...buttonRest}
+      onClick={(event) => {
+        if (analytics) {
+          track({
+            name: "cta_click",
+            location: analytics.location,
+            label: label ?? "",
+          });
+        }
+        buttonRest.onClick?.(event);
+      }}
     >
       {children}
     </motion.button>

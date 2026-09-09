@@ -28,22 +28,26 @@ export function TrustPanel({
       <div className="flex flex-col gap-3 border-b p-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="meta-label text-accent">Built. Launched. Measured.</p>
-          <h2 className="mt-2 text-xl font-bold tracking-tight text-content">
+          <h2 className="text-content mt-2 text-xl font-bold tracking-tight">
             Proof grows with the work.
           </h2>
         </div>
-        <p className="max-w-sm text-sm leading-relaxed text-content-secondary">
+        <p className="text-content-secondary max-w-sm text-sm leading-relaxed">
           Only verified client evidence, metrics, and technology relationships
           belong here.
         </p>
       </div>
       {verifiedMetrics.length ? (
-        <div className="grid gap-px bg-content/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-content/[0.08] grid gap-px sm:grid-cols-2 lg:grid-cols-3">
           {verifiedMetrics.map((metric) => (
             <ResultMetric
               key={metric.label}
-              metric={metric}
-              className="rounded-none border-0 bg-white"
+              value={metric.value}
+              label={metric.label}
+              unit={metric.unit}
+              verified
+              source={metric.description ?? "Client-reported"}
+              className="rounded-none border-0"
             />
           ))}
         </div>

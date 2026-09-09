@@ -7,23 +7,32 @@ interface LogoProps {
   className?: string;
   /** When false, renders the mark without wrapping it in a link to home. */
   asLink?: boolean;
-  /** "inverse" renders the wordmark white for use on dark backgrounds. */
+  /** `inverse` for the dark footer band. */
   tone?: "default" | "inverse";
 }
 
 /**
- * Config-driven logo. Renders one of three modes based on
- * `siteConfig.logo.type`:
- *  - "text": the wordmark (default, no asset required)
- *  - "image": an <Image> from `siteConfig.logo.imagePath`
- *  - "svg":   a React component supplied via `siteConfig.logo.svgComponent`
+ * Config-driven logo. `siteConfig.logo.type` selects the mode, so swapping in
+ * the real asset is an edit to `config/site.ts` and nothing else.
  *
- * Swap modes by editing src/config/site.ts only — no component changes needed.
+ * ASSET GAP — read before "fixing" this. The supplied brand files are raster
+ * only, `public/logos/logo.svg` is 0 bytes, and the real wordmark sets `dev`
+ * in **white**, which is invisible on this theme's white canvas. So the text
+ * mode below is not a placeholder for a missing file — it is the only version
+ * that currently works on paper, and the vector redraw is launch-blocking
+ * (ADR 0002 consequences).
+ *
+ * The interim mark is derived from the logo rather than invented: an ember `<`,
+ * three rising bars warming ember → gold, and a blue `>`. That is the same
+ * left-to-right reading the phase colours come from, so it stays truthful to
+ * the brand while being legible at 28px on white.
  */
-export function Logo({ className, asLink = true, tone = "default" }: LogoProps) {
+export function Logo({
+  className,
+  asLink = true,
+  tone = "default",
+}: LogoProps) {
   const { logo, name } = siteConfig;
-  // Local cast keeps the union intact for comparisons regardless of how the
-  // `as const` config resolves the nested type assertion on `logo.type`.
   const logoType = logo.type as "text" | "image" | "svg";
 
   let mark: React.ReactNode;
@@ -40,32 +49,68 @@ export function Logo({ className, asLink = true, tone = "default" }: LogoProps) 
       />
     );
   } else if (logoType === "svg" && logo.svgComponent) {
-    // svgComponent is typed as a renderable node in config when provided.
     mark = logo.svgComponent as React.ReactNode;
   } else {
-    // Text wordmark + a custom SVG brand mark (a rising "growth" path with an
-    // end node). Swap the whole logo via siteConfig.logo — no edits here.
     mark = (
-      <span className="inline-flex items-center gap-2.5">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-gradient text-white shadow-[0_6px_16px_-9px_rgba(47,87,226,0.8)]">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M4 16 L10 10 L14 14 L20 6"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="20" cy="6" r="2.3" fill="currentColor" />
-          </svg>
-        </span>
+      <span className="inline-flex items-center gap-2">
+        <svg
+          width="26"
+          height="20"
+          viewBox="0 0 26 20"
+          fill="none"
+          aria-hidden="true"
+          className="shrink-0"
+        >
+          {/* ember `<` */}
+          <path
+            d="M5.5 4 L1.5 10 L5.5 16"
+            stroke="var(--ember)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* three rising bars, ember → gold */}
+          <rect
+            x="8.5"
+            y="11.5"
+            width="2.2"
+            height="4.5"
+            rx="0.6"
+            fill="var(--ember)"
+          />
+          <rect
+            x="12"
+            y="8.5"
+            width="2.2"
+            height="7.5"
+            rx="0.6"
+            fill="var(--action)"
+          />
+          <rect
+            x="15.5"
+            y="5"
+            width="2.2"
+            height="11"
+            rx="0.6"
+            fill="var(--gold)"
+          />
+          {/* blue `>` */}
+          <path
+            d="M20.5 4 L24.5 10 L20.5 16"
+            stroke="var(--signal)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
         <span
           className={cn(
-            "font-mono text-base font-semibold tracking-[0.16em]",
-            tone === "inverse" ? "text-white" : "text-content",
+            "font-display text-body font-extrabold tracking-eyebrow",
+            tone === "inverse" ? "text-ink-inverse" : "text-ink",
           )}
         >
-          {logo.text}
+          DEV
+          <span className="text-signal">2SCALE</span>
         </span>
       </span>
     );
@@ -81,7 +126,10 @@ export function Logo({ className, asLink = true, tone = "default" }: LogoProps) 
     <Link
       href="/"
       aria-label={`${name} — home`}
-      className={cn(wrapperClass, "transition-opacity hover:opacity-80")}
+      className={cn(
+        wrapperClass,
+        "rounded transition-opacity hover:opacity-80",
+      )}
     >
       {mark}
     </Link>
