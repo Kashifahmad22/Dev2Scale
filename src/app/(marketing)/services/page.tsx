@@ -5,6 +5,7 @@ import { CtaPanel } from "@/components/ui/CtaPanel";
 import { PhaseTriad } from "@/components/sections/PhaseTriad";
 import { EntryPointSelector } from "@/components/sections/EntryPointSelector";
 import { primaryCta } from "@/config/nav";
+import { getRoute } from "@/config/routes";
 import { systemStatement } from "@/content/growth-model";
 import { createMetadata } from "@/lib/seo/metadata";
 
@@ -23,7 +24,7 @@ export default function ServicesPage() {
     <>
       <section className="border-b border-line bg-paper">
         <Container width="wide" className="py-section-y">
-          <Eyebrow withRule>Services</Eyebrow>
+          <Eyebrow withRule>{getRoute("/services").label}</Eyebrow>
           <h1 className="mt-6 max-w-4xl text-display-1 text-ink">
             Three phases. One system. You start where you are.
           </h1>

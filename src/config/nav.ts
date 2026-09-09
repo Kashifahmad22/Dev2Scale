@@ -15,9 +15,9 @@ import { siteConfig } from "@/config/site";
  * a service page to the registry with a `phase` and it appears in the right
  * column automatically.
  *
- * Five destinations plus one CTA (PRD §8). The Services mega-menu is grouped
- * Build / Automate / Grow so the navigation itself teaches the three-phase
- * model before the visitor has scrolled anything.
+ * Five destinations plus one CTA (PRD §8). The "What We Build" mega-menu is
+ * grouped Build / Automate / Grow so the navigation itself teaches the
+ * three-phase model before the visitor has scrolled anything.
  */
 
 export interface MegaMenuColumn {
@@ -25,7 +25,7 @@ export interface MegaMenuColumn {
   services: RouteDef[];
 }
 
-/** The Services mega-menu: one column per phase, in tagline order. */
+/** The "What We Build" mega-menu: one column per phase, in tagline order. */
 export const megaMenuColumns: MegaMenuColumn[] = phases.map((phase) => ({
   phase,
   services: servicesForPhase(phase.id),
@@ -65,7 +65,7 @@ export const secondaryCta = {
  */
 export const footerColumns = [
   {
-    heading: "Services",
+    heading: "What We Build",
     links: phases.flatMap((phase) =>
       servicesForPhase(phase.id).map((route) => ({
         label: route.label,

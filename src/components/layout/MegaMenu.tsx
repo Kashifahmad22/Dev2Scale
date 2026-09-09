@@ -9,7 +9,7 @@ import { phaseAccent } from "@/lib/pillars";
 import { cn } from "@/lib/utils";
 
 /**
- * MegaMenu — the Services panel, grouped Build / Automate / Grow.
+ * MegaMenu — the "What We Build" panel, grouped Build / Automate / Grow.
  *
  * The grouping is the point. The nav teaches the three-phase model before the
  * visitor has scrolled anything, which means the homepage doesn't have to do

@@ -68,7 +68,7 @@ export function ServicePageTemplate({
               <li aria-hidden="true">/</li>
               <li>
                 <Link href="/services" className="rounded hover:text-ink">
-                  Services
+                  {getRoute("/services").label}
                 </Link>
               </li>
               <li aria-hidden="true">/</li>

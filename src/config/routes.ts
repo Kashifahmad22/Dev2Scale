@@ -32,7 +32,7 @@ export type ChangeFrequency =
 export interface RouteDef {
   /** Absolute path, no trailing slash. The registry key. */
   path: string;
-  /** Short nav + breadcrumb label. Two words at most. */
+  /** Short nav + breadcrumb label. Two or three words, scannable at a glance. */
   label: string;
   /** `<title>` without the brand suffix — the factory appends that. */
   title: string;
@@ -68,7 +68,11 @@ export const routes: RouteDef[] = [
   /* ---- Services ------------------------------------------------------- */
   {
     path: "/services",
-    label: "Services",
+    // Nav-visible label only — "systems/products" reads more like a serious
+    // digital-product company and less like a generic agency (see homepage
+    // redesign brief). `path`/`title`/`description` stay put: no URL,
+    // sitemap or metadata change, so zero SEO risk from this rename.
+    label: "What We Build",
     title: "Our Services — Build, Automate, Grow",
     description:
       "One system with three phases: build the digital foundation, automate the repeat work, grow the revenue. See what each phase delivers and where to start.",
