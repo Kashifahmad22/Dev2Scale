@@ -750,7 +750,7 @@ export const whyContent = {
       icon: TrendingUp,
       title: "Revenue-First Thinking",
       description:
-        "We don't report on activity. We report on outcomes — leads processed, calls booked, revenue attributed. If the system isn't generating ROI, we fix it.",
+        "We don't report on activity. We report on outcomes — enquiries converted, calls booked, revenue attributed to the channel that produced it. If a part of the system isn't paying for itself, we fix it.",
     },
   ] satisfies ValueProp[],
 };
@@ -810,7 +810,7 @@ export const faqContent = {
     {
       question: "Can you build the website and manage advertising?",
       answer:
-        "Yes. The Build and Grow services are designed to connect the website, conversion journey, tracking, and acquisition work where that is the right fit.",
+        "Yes. The Build and Grow phases are designed to connect the website, conversion journey, tracking, and acquisition work where that is the right fit.",
     },
     {
       question: "Can you integrate AI with our existing tools?",
@@ -961,10 +961,9 @@ export const loomDemosContent = {
 export const founderContent = {
   eyebrow: "Why we exist",
   heading: "A note from the founder.",
-  // Edit these paragraphs in your own words before launch.
   body: [
-    "Dev2Scale started with a simple, frustrating observation: good businesses lose deals they already paid to win — not to better competitors, but to slow follow-up. A lead enquires at 11pm, hears nothing until morning, and books with whoever replied first.",
-    "We don't sell \"AI.\" We build the unglamorous infrastructure that makes sure every lead gets a fast, helpful, human-sounding response and a clear path to a call — then we hand you the keys. You own the systems. We're measured on booked calls, not activity.",
+    "Dev2Scale started with a simple, frustrating observation: good businesses lose revenue they already paid to win — not to a better competitor, but to a disconnected system. A site that can't convert what the ads send it. A lead that waits six hours for a reply. Spend nobody can attribute to a result.",
+    "We don't sell three separate services. We build the site, the automation and the acquisition work as one connected system, scoped to whichever phase a business actually needs — then we hand over the keys. You own every account and every asset. We're measured on the outcome, not on activity.",
   ],
   signature: {
     name: "The Dev2Scale team",
@@ -991,7 +990,7 @@ export const reliabilityContent = {
       icon: ShieldCheck,
       title: "Official APIs only",
       description:
-        "Everything runs on the official WhatsApp Business API and enterprise-grade providers — never grey-area workarounds that get numbers banned.",
+        "Every system runs on official platform APIs and enterprise-grade providers — never grey-area workarounds that get an account suspended or banned.",
     },
     {
       icon: Lock,

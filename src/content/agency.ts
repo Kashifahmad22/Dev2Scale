@@ -339,8 +339,9 @@ export const workPlaceholders: CaseStudy[] = [
   },
 ];
 
-/** Only the supplied Patna Fashion headline result is published. No supporting
- * metrics, campaign screenshots, or testimonials are inferred. */
+/** The Patna Fashion result, published with the account evidence behind it —
+ * the Meta Ads Manager screenshot corroborates the calls and spend figures
+ * below. No metric here is inferred beyond what that screenshot shows. */
 export const workItems: CaseStudy[] = [
   {
     id: "patna-fashion-performance",
@@ -348,6 +349,8 @@ export const workItems: CaseStudy[] = [
     featured: true,
     pillar: "grow",
     client: "Patna Fashion",
+    industry: "Retail — sarees & ethnic wear",
+    location: "Begusarai, Bihar",
     service: "Performance Marketing",
     projectTitle: "Local customer-acquisition campaign",
     resultSummary:
@@ -359,8 +362,28 @@ export const workItems: CaseStudy[] = [
         description: "Verified business result from the campaign.",
         verified: true,
       },
+      {
+        label: "Calls generated",
+        value: "138+",
+        description: "Meta Ads Manager — \"Saree Campaign Aug\".",
+        verified: true,
+      },
+      {
+        label: "Ad spend",
+        value: "₹1,946",
+        description: "Meta Ads Manager — \"Saree Campaign Aug\".",
+        verified: true,
+      },
     ],
-    media: [],
+    media: [
+      {
+        kind: "dashboard",
+        src: "/work/patna-fashion/ads-manager.webp",
+        alt: "Meta Ads Manager screenshot of the Patna Fashion \"Saree Campaign Aug\" results: 138 calls placed, ₹1,946.60 spent.",
+        caption:
+          "Meta Ads Manager — the campaign that produced the result above.",
+      },
+    ],
   },
   ...workPlaceholders,
 ];

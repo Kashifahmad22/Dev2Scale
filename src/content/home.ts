@@ -30,8 +30,6 @@ export const hero = {
   titleAfter: " that help businesses grow.",
   support:
     "Websites, AI automation and performance marketing — designed as one system with three phases, so you start at the phase you actually need and nothing gets built twice.",
-  primaryCta: "Let's Build & Scale",
-  secondaryCta: "See our work",
 } as const;
 
 /**
@@ -107,6 +105,40 @@ export const problem = {
     },
   ] satisfies ProblemItem[],
 } as const;
+
+/**
+ * The without/with contrast — a device mined from the pre-rebuild homepage's
+ * problem section (`config/site.ts`'s old `problemContent.columns`), rewritten
+ * to span all three phases rather than only "leads go cold." Same honesty
+ * rule as everywhere else: these are structural claims about how the system
+ * is built, not a specific client's before/after.
+ */
+export interface ComparisonColumn {
+  heading: string;
+  tone: "negative" | "positive";
+  points: string[];
+}
+
+export const problemComparison: ComparisonColumn[] = [
+  {
+    heading: "Without one connected system",
+    tone: "negative",
+    points: [
+      "The site looks fine and converts nothing — no clear next step, no way to tell where visitors give up.",
+      "An enquiry arrives outside office hours and waits until someone happens to notice it.",
+      "Spend goes out across two or three channels and nobody can say which one actually paid for itself.",
+    ],
+  },
+  {
+    heading: "With Build → Automate → Grow",
+    tone: "positive",
+    points: [
+      "The site is structured around how customers actually decide, with one obvious next step.",
+      "Every enquiry gets a fast, automatic first response — day or night, qualified before it reaches a calendar.",
+      "Every unit of spend is tracked back to the page and channel that produced it, reported in outcomes, not impressions.",
+    ],
+  },
+];
 
 /** Why Dev2Scale — the objection-closing section. */
 export const whyPoints = [
