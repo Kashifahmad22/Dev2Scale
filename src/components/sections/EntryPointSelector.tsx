@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
@@ -11,6 +12,7 @@ import {
   type TrackId,
 } from "@/content/growth-model";
 import { track } from "@/lib/analytics/track";
+import { fadeIn } from "@/lib/animations";
 import { phaseAccent } from "@/lib/pillars";
 import { cn } from "@/lib/utils";
 
@@ -40,6 +42,7 @@ import { cn } from "@/lib/utils";
 export function EntryPointSelector() {
   const [selected, setSelected] = useState<TrackId>(entryTracks[0].id);
   const baseId = useId();
+  const reduce = useReducedMotion();
 
   const activeTrack =
     entryTracks.find((entry) => entry.id === selected) ?? entryTracks[0];
@@ -131,72 +134,88 @@ export function EntryPointSelector() {
         role="tabpanel"
         aria-labelledby={`${baseId}-tab-${activeTrack.id}`}
         tabIndex={0}
-        className="mt-8 rounded-card border border-line bg-paper-alt p-6 md:p-9"
+        className="mt-8 overflow-hidden rounded-card border border-line bg-paper-alt p-6 md:p-9"
       >
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12">
-          <div>
-            <p className="meta-label text-ink-muted">Who this is</p>
-            <p className="mt-2.5 text-body text-ink-secondary">
-              {activeTrack.audience}
-            </p>
+        {/* Cross-fade only, never a slide — a horizontal slide on tab change
+            fights the reading direction (component note above / docs/06 §4).
+            AnimatePresence key-swap, so this sets initial/animate/exit off
+            `fadeIn` directly rather than the `whileInView`-based
+            `getMotionProps` helper, which is the wrong trigger here. */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTrack.id}
+            variants={fadeIn}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            exit={reduce ? undefined : "hidden"}
+            className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12"
+          >
+            <div>
+              <p className="meta-label text-ink-muted">Who this is</p>
+              <p className="mt-2.5 text-body text-ink-secondary">
+                {activeTrack.audience}
+              </p>
 
-            <p className="meta-label mt-7 text-ink-muted">What we do</p>
-            <p className="mt-2.5 text-body-lg text-ink">
-              {activeTrack.provides}
-            </p>
+              <p className="meta-label mt-7 text-ink-muted">What we do</p>
+              <p className="mt-2.5 text-body-lg text-ink">
+                {activeTrack.provides}
+              </p>
 
-            <div className="mt-8">
-              <Button
-                href={activeTrack.href}
-                analytics={{
-                  location: "entry-selector",
-                  label: activeTrack.cta,
-                }}
-              >
-                {activeTrack.cta}
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Button>
+              <div className="mt-8">
+                <Button
+                  href={activeTrack.href}
+                  analytics={{
+                    location: "entry-selector",
+                    label: activeTrack.cta,
+                  }}
+                >
+                  {activeTrack.cta}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <p className="meta-label text-ink-muted">The phases this engages</p>
-            {/* Ordered list, because for this track the order is the
-                recommendation — it is the sequence of work, not a menu. */}
-            <ol className="mt-4 space-y-3">
-              {activePhases.map((phase, index) => {
-                const accent = phaseAccent(phase.id);
-                return (
-                  <li
-                    key={phase.id}
-                    className="flex items-start gap-3 rounded border border-line bg-paper p-3.5"
-                  >
-                    <span
-                      className={cn(
-                        "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-sm",
-                        accent.fill,
-                        accent.onFill,
-                      )}
+            <div>
+              <p className="meta-label text-ink-muted">
+                The phases this engages
+              </p>
+              {/* Ordered list, because for this track the order is the
+                  recommendation — it is the sequence of work, not a menu. */}
+              <ol className="mt-4 space-y-3">
+                {activePhases.map((phase, index) => {
+                  const accent = phaseAccent(phase.id);
+                  return (
+                    <li
+                      key={phase.id}
+                      className="flex items-start gap-3 rounded border border-line bg-paper p-3.5"
                     >
-                      <Check aria-hidden="true" className="h-3.5 w-3.5" />
-                    </span>
-                    <span>
-                      <span className={cn("meta-label block", accent.text)}>
-                        Step {index + 1} · {phase.name}
-                      </span>
-                      <Link
-                        href={phase.href}
-                        className="mt-0.5 block text-body-sm font-semibold text-ink underline-offset-4 hover:underline"
+                      <span
+                        className={cn(
+                          "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-sm",
+                          accent.fill,
+                          accent.onFill,
+                        )}
                       >
-                        {phase.role}
-                      </Link>
-                    </span>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-        </div>
+                        <Check aria-hidden="true" className="h-3.5 w-3.5" />
+                      </span>
+                      <span>
+                        <span className={cn("meta-label block", accent.text)}>
+                          Step {index + 1} · {phase.name}
+                        </span>
+                        <Link
+                          href={phase.href}
+                          className="mt-0.5 block text-body-sm font-semibold text-ink underline-offset-4 hover:underline"
+                        >
+                          {phase.role}
+                        </Link>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </Section>
   );
