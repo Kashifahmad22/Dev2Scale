@@ -1,161 +1,111 @@
 import Link from "next/link";
-import { Linkedin, Instagram, Twitter, Mail, Calendar, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { siteConfig, footerContent } from "@/config/site";
+import { Container } from "@/components/ui/Container";
+import { footerColumns } from "@/config/nav";
+import { legalRoutes } from "@/config/routes";
+import { siteConfig } from "@/config/site";
 
 /**
- * Site footer — a dark anchor band beneath the light page. Four columns
- * (Brand, Services, Company, Contact) plus a bottom bar with copyright and
- * legal links. Every link and value is sourced from siteConfig / footerContent;
- * empty contact/social values are omitted.
+ * Footer — the one dark band on the page (ADR 0002).
+ *
+ * It closes the document rather than decorating it: full sitemap, the legal
+ * routes, and the contact channels. Columns come from `config/nav.ts`, which
+ * derives them from the route registry, so a new page appears here without a
+ * second list to maintain.
+ *
+ * Empty `siteConfig` values are filtered rather than rendered — an unset social
+ * handle disappears instead of shipping a link to nowhere. `siteConfig.social.twitter`
+ * is currently empty, and that is why it is absent rather than broken.
  */
 export function Footer() {
-  const year = new Date().getFullYear();
-  const { social, contact, legal, name } = siteConfig;
-
-  const socials = [
-    { href: social.linkedin, icon: Linkedin, label: "LinkedIn" },
-    { href: social.instagram, icon: Instagram, label: "Instagram" },
-    { href: social.twitter, icon: Twitter, label: "Twitter / X" },
-  ].filter((s) => s.href);
-
-  return (
-    <footer className="bg-background-dark text-white/70">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:gap-8">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Logo tone="inverse" />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/55">
-              {footerContent.positioning}
-            </p>
-            <div className="mt-5 flex items-center gap-3">
-              {socials.map(({ href, icon: Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-white/35 hover:text-white"
-                >
-                  <Icon size={16} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Services */}
-          <FooterColumn
-            heading={footerContent.columns.services.heading}
-            links={footerContent.columns.services.links}
-          />
-
-          {/* Company */}
-          <FooterColumn
-            heading={footerContent.columns.company.heading}
-            links={footerContent.columns.company.links}
-          />
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white/45">
-              Contact
-            </h3>
-            <ul className="mt-4 space-y-3 text-sm">
-              {contact.email && (
-                <li>
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="inline-flex items-center gap-2 text-white/65 transition-colors hover:text-white"
-                  >
-                    <Mail size={15} /> {contact.email}
-                  </a>
-                </li>
-              )}
-              {contact.calendly && (
-                <li>
-                  <a
-                    href={contact.calendly}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-white/65 transition-colors hover:text-white"
-                  >
-                    <Calendar size={15} /> Book a Call
-                  </a>
-                </li>
-              )}
-              {contact.whatsapp && (
-                <li>
-                  <a
-                    href={contact.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-white/65 transition-colors hover:text-white"
-                  >
-                    <MessageCircle size={15} /> WhatsApp
-                  </a>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-7 text-sm text-white/45 sm:flex-row">
-          <p>
-            © {year} {name}. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <Link
-              href={legal.privacyPolicy}
-              className="transition-colors hover:text-white"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href={legal.terms}
-              className="transition-colors hover:text-white"
-            >
-              Terms of Service
-            </Link>
-          </div>
-        </div>
-      </div>
-    </footer>
+  const socials = Object.entries(siteConfig.social).filter(
+    ([, href]) => href.length > 0,
   );
-}
+  const year = new Date().getFullYear();
 
-interface FooterColumnProps {
-  heading: string;
-  links: { label: string; href: string }[];
-}
-
-/** Renders a labelled column of links; external links open in a new tab. */
-function FooterColumn({ heading, links }: FooterColumnProps) {
   return (
-    <div>
-      <h3 className="text-xs font-semibold uppercase tracking-wider text-white/45">
-        {heading}
-      </h3>
-      <ul className="mt-4 space-y-3 text-sm">
-        {links.map((link) => {
-          const external = link.href.startsWith("http");
-          return (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                {...(external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className="text-white/65 transition-colors hover:text-white"
+    <footer className="bg-band-dark py-section-y-tight text-ink-inverse">
+      <Container>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
+          <div>
+            <Logo tone="inverse" />
+            <p className="text-paper-alt/70 mt-4 max-w-xs text-body-sm">
+              {siteConfig.description}
+            </p>
+            <p className="text-paper-alt/50 mt-6 text-caption">
+              {siteConfig.company.serviceArea}
+            </p>
+          </div>
+
+          {footerColumns.map((column) => (
+            <div key={column.heading}>
+              <h2 className="meta-label text-paper-alt/50 mb-4">
+                {column.heading}
+              </h2>
+              <ul className="space-y-2.5">
+                {column.links.map((link) => {
+                  const isExternal = link.href.startsWith("http");
+                  const isMail = link.href.startsWith("mailto:");
+                  return (
+                    <li key={`${column.heading}-${link.href}`}>
+                      {isExternal || isMail ? (
+                        <a
+                          href={link.href}
+                          {...(isExternal
+                            ? {
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                              }
+                            : {})}
+                          className="text-paper-alt/80 rounded text-body-sm transition-colors duration-fast ease-clean hover:text-ink-inverse"
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-paper-alt/80 rounded text-body-sm transition-colors duration-fast ease-clean hover:text-ink-inverse"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="border-paper-alt/10 mt-12 flex flex-col gap-4 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-paper-alt/50 text-caption">
+            © {year} {siteConfig.company.legalName}. All rights reserved.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {legalRoutes.map((route) => (
+              <Link
+                key={route.path}
+                href={route.path}
+                className="text-paper-alt/60 rounded text-caption transition-colors duration-fast ease-clean hover:text-ink-inverse"
               >
-                {link.label}
+                {route.label}
+              </Link>
+            ))}
+            {socials.map(([network, href]) => (
+              <a
+                key={network}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-paper-alt/60 rounded text-caption capitalize transition-colors duration-fast ease-clean hover:text-ink-inverse"
+              >
+                {network}
               </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </footer>
   );
 }
