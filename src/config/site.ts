@@ -94,10 +94,11 @@ export interface NavLink {
 }
 
 export const navLinks: NavLink[] = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "About", href: "#why-dev2scale" },
+  { label: "Services", href: "/services" },
+  { label: "Work", href: "/work" },
+  { label: "Process", href: "/process" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "About", href: "/about" },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -847,19 +848,21 @@ export const footerContent = {
     services: {
       heading: "Services",
       links: [
-        { label: "Website Development", href: "#website-packages" },
-        { label: "AI Systems", href: "#ai-systems" },
-        { label: "Performance Marketing", href: "#marketing-packages" },
+        { label: "Websites", href: "/services/websites" },
+        { label: "Ecommerce", href: "/services/ecommerce" },
+        { label: "AI Systems", href: "/services/ai-systems" },
+        { label: "Automation", href: "/services/automation" },
+        { label: "Performance Marketing", href: "/services/performance-marketing" },
       ],
     },
     company: {
       heading: "Company",
       links: [
-        { label: "Work", href: "#work" },
-        { label: "Process", href: "#process" },
-        { label: "About", href: "#why-dev2scale" },
-        { label: "FAQ", href: "#faq" },
-        { label: "Contact", href: "#contact" },
+        { label: "Work", href: "/work" },
+        { label: "Process", href: "/process" },
+        { label: "Pricing", href: "/pricing" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
       ],
     },
   },
