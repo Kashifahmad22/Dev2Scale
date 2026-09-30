@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   AnimatePresence,
@@ -62,18 +63,27 @@ export function Navbar() {
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <button
-                onClick={() => handleNav(link.href)}
-                className="text-sm text-content-secondary transition-colors duration-150 hover:text-content"
-              >
-                {link.label}
-              </button>
+              {link.href.startsWith("#") ? (
+                <button
+                  onClick={() => handleNav(link.href)}
+                  className="text-sm text-content-secondary transition-colors duration-150 hover:text-content"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <Link
+                  href={link.href}
+                  className="text-sm text-content-secondary transition-colors duration-150 hover:text-content"
+                >
+                  {link.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
 
         <div className="hidden md:block">
-          <Button href="#contact" variant="dark" size="sm">
+          <Button href="/contact" variant="dark" size="sm">
             Let’s Talk
           </Button>
         </div>
@@ -102,16 +112,26 @@ export function Navbar() {
             <ul className="space-y-1 px-5 py-4">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <button
-                    onClick={() => handleNav(link.href)}
-                    className="block w-full rounded px-2 py-2.5 text-left text-sm text-content-secondary transition-colors hover:bg-content/[0.04] hover:text-content"
-                  >
-                    {link.label}
-                  </button>
+                  {link.href.startsWith("#") ? (
+                    <button
+                      onClick={() => handleNav(link.href)}
+                      className="block w-full rounded px-2 py-2.5 text-left text-sm text-content-secondary transition-colors hover:bg-content/[0.04] hover:text-content"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block w-full rounded px-2 py-2.5 text-left text-sm text-content-secondary transition-colors hover:bg-content/[0.04] hover:text-content"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
               <li className="pt-2">
-                <Button href="#contact" size="md" className="w-full">
+                <Button href="/contact" size="md" className="w-full">
                   Let’s Talk
                 </Button>
               </li>
